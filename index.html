@@ -390,9 +390,9 @@
     <a href="https://www.etsy.com/se-en/shop/AtelierBage?ref=shop-header-name&listing_id=4503765469&from_page=listing#about" class="btn-ghost" target="_blank" rel="noopener">Why it exists</a>
   </div>
 
-  <!-- Main dynamic product image container -->
+  <!-- Main dynamic product image container (Updated for GitHub) -->
   <div class="hero-image-container">
-    <img id="product-photo" src="sage.jpg" alt="SOKL portable wine stake">
+    <img id="product-photo" src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/main/YOUR_FOLDER_NAME/Green.png" alt="SOKL portable wine stake">
   </div>
 </section>
 
@@ -447,24 +447,25 @@
     <p class="eyebrow" style="margin:0 auto 1rem; display:block;">Five colours</p>
     <h2 class="section-title" style="margin:0 auto 0;">Pick the one that's already in your head.</h2>
     
+    <!-- Updated data-img URLs to fetch from GitHub raw content -->
     <div class="colour-row reveal">
-      <div class="colour-chip active" data-img="sage.jpg">
+      <div class="colour-chip active" data-img="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/main/YOUR_FOLDER_NAME/Green.png">
         <div class="swatch" style="background:#7A8C7A;"></div>
         <span>Sage green</span>
       </div>
-      <div class="colour-chip" data-img="terracotta.jpg">
+      <div class="colour-chip" data-img="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/main/YOUR_FOLDER_NAME/Terracotta.png">
         <div class="swatch" style="background:#C8915F;"></div>
         <span>Terracotta</span>
       </div>
-      <div class="colour-chip" data-img="beige.jpg">
+      <div class="colour-chip" data-img="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/main/YOUR_FOLDER_NAME/Beige.png">
         <div class="swatch" style="background:#D8C7A8;"></div>
         <span>Beige / tan</span>
       </div>
-      <div class="colour-chip" data-img="blue.jpg">
+      <div class="colour-chip" data-img="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/main/YOUR_FOLDER_NAME/Blue.png">
         <div class="swatch" style="background:#9DBFCB;"></div>
         <span>Sky blue</span>
       </div>
-      <div class="colour-chip" data-img="yellow.jpg">
+      <div class="colour-chip" data-img="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/main/YOUR_FOLDER_NAME/Yellow.png">
         <div class="swatch" style="background:#E0B84A;"></div>
         <span>Yellow</span>
       </div>
@@ -509,6 +510,7 @@
     {p:1,    c:'#2A2220'}
   ];
 
+  // Rest of script remains completely untouched so the background & switches function beautifully
   function hexToRgb(hex){
     const v = hex.replace('#','');
     return [parseInt(v.substring(0,2),16), parseInt(v.substring(2,4),16), parseInt(v.substring(4,6),16)];
@@ -562,7 +564,6 @@
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 
-  // Reveal on scroll
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
@@ -571,7 +572,6 @@
   }, {threshold:0.15});
   revealEls.forEach(el=>io.observe(el));
 
-  // Interactive Product Color/Image Switcher
   const productPhoto = document.getElementById('product-photo');
 
   document.querySelectorAll('.colour-chip').forEach(chip=>{
@@ -582,7 +582,6 @@
       const newImgSrc = chip.getAttribute('data-img');
       
       if(productPhoto) {
-        // Smoothly fade out, change source, and fade back in
         productPhoto.style.opacity = 0;
         setTimeout(() => {
           productPhoto.src = newImgSrc;
