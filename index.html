@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atelier Båge — Sokl, a portable wine stake</title>
+<title>Atelier Båge — SOKL, a portable wine stake</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -30,6 +30,7 @@
     color:var(--bark);
     overflow-x:hidden;
     line-height:1.6;
+    transition:color 0.3s ease;
   }
   .display{font-family:'Fraunces', serif;}
   a{color:inherit;text-decoration:none;}
@@ -40,8 +41,7 @@
     position:fixed;
     inset:0;
     z-index:-1;
-    background:linear-gradient(180deg, var(--dusk-1) 0%, var(--dusk-1) 100%);
-    transition:background 0.1s linear;
+    background:var(--dusk-1);
   }
 
   /* ---------- Nav ---------- */
@@ -53,17 +53,18 @@
     align-items:center;
     justify-content:space-between;
     padding:1.4rem clamp(1.5rem, 5vw, 4rem);
-    mix-blend-mode:normal;
+    transition: background 0.3s ease;
   }
   .nav-mark{
     font-family:'Plus Jakarta Sans', sans-serif;
     font-weight:600;
     font-size:1.05rem;
     letter-spacing:-0.01em;
-    color:var(--nav-color, var(--bark));
+    color:var(--bark);
     display:flex;
     align-items:center;
     gap:0.5rem;
+    transition: color 0.3s ease;
   }
   .nav-mark .mono{
     width:30px;height:30px;
@@ -74,16 +75,16 @@
     font-size:0.85rem;
     font-weight:600;
     flex-shrink:0;
-    transition:background 0.4s ease, color 0.4s ease;
+    transition:background 0.3s ease, color 0.3s ease;
   }
   .nav-link{
     font-size:0.85rem;
     font-weight:500;
-    color:var(--nav-color, var(--bark));
+    color:var(--bark);
     border:1px solid currentColor;
     padding:0.55rem 1.3rem;
     border-radius:100px;
-    transition:all 0.25s ease;
+    transition:all 0.3s ease;
     white-space:nowrap;
   }
   .nav-link:hover{
@@ -113,6 +114,7 @@
     text-transform:uppercase;
     color:var(--bark-soft);
     font-weight:500;
+    transition: color 0.3s ease;
   }
   .hero h1{
     font-family:'Fraunces', serif;
@@ -121,17 +123,20 @@
     line-height:1.02;
     letter-spacing:-0.01em;
     max-width:18ch;
+    transition: color 0.3s ease;
   }
   .hero h1 em{
     font-style:italic;
     font-weight:500;
     color:var(--sage-deep);
+    transition: color 0.3s ease;
   }
   .hero p{
     font-size:clamp(1rem, 1.6vw, 1.15rem);
     color:var(--bark-soft);
     max-width:38ch;
     font-weight:400;
+    transition: color 0.3s ease;
   }
   .hero-actions{
     display:flex;
@@ -147,7 +152,7 @@
     border-radius:100px;
     font-weight:600;
     font-size:0.95rem;
-    transition:transform 0.25s ease, background 0.25s ease;
+    transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease;
     display:inline-block;
   }
   .btn-primary:hover{
@@ -168,23 +173,18 @@
     color:var(--linen);
   }
 
-  /* Hero illustration: Sokl planted in grass, line art */
-  .hero-illustration{
-    width:min(420px, 80vw);
-    margin-top:1rem;
+  /* Container for the dynamic product photo */
+  .hero-image-container {
+    width: min(450px, 85vw);
+    margin-top: 1.5rem;
+    border-radius: 24px;
+    overflow: hidden;
   }
-  .blade{
-    transform-origin:bottom center;
-    animation:sway 6s ease-in-out infinite;
-  }
-  .blade:nth-child(odd){animation-duration:7.5s; animation-delay:0.3s;}
-  .blade:nth-child(3n){animation-duration:5.5s; animation-delay:0.6s;}
-  @keyframes sway{
-    0%,100%{transform:rotate(0deg);}
-    50%{transform:rotate(2.5deg);}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .blade{animation:none;}
+  .hero-image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
   }
 
   /* ---------- Section shared ---------- */
@@ -233,10 +233,11 @@
     padding:2.5rem 2rem;
     position:relative;
     overflow:hidden;
+    transition: background 0.3s ease;
   }
   .moment-card svg{width:100%;}
 
-  /* ---------- Feature row ---------- */
+  /* ---------- Features row ---------- */
   .features{
     display:grid;
     grid-template-columns:repeat(3, 1fr);
@@ -295,7 +296,7 @@
     transform:scale(1.08);
   }
   .colour-chip.active .swatch{
-    border-color:var(--bark);
+    border-color:currentColor;
   }
   .colour-chip span{
     font-size:0.82rem;
@@ -306,7 +307,6 @@
   /* ---------- Quote / philosophy ---------- */
   .philosophy{
     text-align:center;
-    color:var(--linen);
   }
   .philosophy blockquote{
     font-family:'Fraunces', serif;
@@ -328,7 +328,6 @@
   /* ---------- Final CTA ---------- */
   .final-cta{
     text-align:center;
-    color:var(--linen);
     min-height:90vh;
     display:flex;
     flex-direction:column;
@@ -337,7 +336,6 @@
     gap:1.8rem;
   }
   .final-cta .section-title{
-    color:var(--linen);
     margin:0 auto 0.5rem;
   }
   .final-cta p{
@@ -345,18 +343,11 @@
     max-width:36ch;
     margin:0 auto;
   }
-  .final-cta .btn-primary{
-    background:var(--linen);
-    color:var(--dusk-5);
-    margin-top:1rem;
-  }
   .final-cta .btn-primary:hover{
     background:var(--sage);
-    color:var(--linen);
   }
 
   footer{
-    color:var(--linen);
     text-align:center;
     padding:3rem 1.5rem 3.5rem;
     font-size:0.82rem;
@@ -386,47 +377,23 @@
 
 <nav id="site-nav">
   <div class="nav-mark"><span class="mono">ab</span>atelier båge</div>
-  <a class="nav-link" href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" id="nav-cta" target="_blank" rel="noopener">See Sokl</a>
+  <a class="nav-link" href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" id="nav-cta" target="_blank" rel="noopener">See SOKL</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow">Hand-finished, Gothenburg</p>
   <h1>A small thing that keeps your evening <em>upright</em>.</h1>
-  <p>Sokl is a portable wine stake — 3D-printed, finished by hand, made to hold a glass steady wherever the grass isn't.</p>
+  <p>SOKL is a portable wine stake — 3D-printed, finished by hand, made to hold a glass steady wherever the grass isn't.</p>
   <div class="hero-actions">
-  <a href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" class="btn-primary" target="_blank" rel="noopener">Get a Sokl — 250 SEK</a>
-  <a href="#story" class="btn-ghost">Why it exists</a>
-</div>>
+    <a href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" class="btn-primary" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
+    <a href="https://www.etsy.com/se-en/shop/AtelierBage?ref=shop-header-name&listing_id=4503765469&from_page=listing#about" class="btn-ghost" target="_blank" rel="noopener">Why it exists</a>
+  </div>
 
-  <svg class="hero-illustration" viewBox="0 0 420 340" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of the Sokl wine stake holding two glasses in grass">
-    <!-- grass blades -->
-    <g stroke="#7A8C7A" stroke-width="3" stroke-linecap="round">
-      <path class="blade" d="M40 320 C 38 280, 50 250, 45 220" />
-      <path class="blade" d="M60 320 C 65 270, 55 240, 62 200" />
-      <path class="blade" d="M85 320 C 80 290, 92 260, 86 235" />
-      <path class="blade" d="M340 320 C 345 280, 332 250, 338 225" />
-      <path class="blade" d="M365 320 C 360 270, 372 245, 364 210" />
-      <path class="blade" d="M390 320 C 385 290, 396 265, 389 240" />
-      <path class="blade" d="M20 320 C 25 295, 15 270, 22 245" />
-    </g>
-    <!-- ground line -->
-    <line x1="0" y1="320" x2="420" y2="320" stroke="#3D3530" stroke-width="1.2" opacity="0.25"/>
-    <!-- stake -->
-    <rect x="203" y="200" width="14" height="120" rx="4" fill="#C8915F"/>
-    <!-- crossbar -->
-    <rect x="150" y="200" width="120" height="16" rx="8" fill="#C8915F"/>
-    <!-- left glass -->
-    <g>
-      <path d="M158 90 L182 90 L176 195 Q170 205 164 195 Z" stroke="#3D3530" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-      <path d="M161 145 Q170 152 179 145 L176 195 Q170 205 164 195 Z" fill="#7A8C7A" opacity="0.55"/>
-    </g>
-    <!-- right glass -->
-    <g>
-      <path d="M238 90 L262 90 L256 195 Q250 205 244 195 Z" stroke="#3D3530" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-      <path d="M241 150 Q250 157 259 150 L256 195 Q250 205 244 195 Z" fill="#C8915F" opacity="0.55"/>
-    </g>
-  </svg>
+  <!-- Main dynamic product image container -->
+  <div class="hero-image-container">
+    <img id="product-photo" src="sage.jpg" alt="SOKL portable wine stake">
+  </div>
 </section>
 
 <!-- STORY -->
@@ -435,18 +402,18 @@
     <div class="reveal">
       <p class="eyebrow">How it started</p>
       <h2 class="section-title">A glass tipped over in the grass. That was sort of it.</h2>
-      <p class="section-lede">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. Sokl started as a fix for one evening and became the first thing Atelier Båge makes.</p>
+      <p class="section-lede">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. SOKL started as a fix for one evening and became the first thing Atelier Båge makes.</p>
     </div>
     <div class="story-visual reveal">
       <div class="moment-card">
-        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line illustration of a wine glass tilting before being held steady by Sokl">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line illustration of a wine glass tilting before being held steady by SOKL">
           <ellipse cx="150" cy="200" rx="130" ry="10" fill="#7A8C7A" opacity="0.18"/>
           <g transform="rotate(-18 90 120)">
             <path d="M78 60 L102 60 L96 150 Q90 158 84 150 Z" stroke="#3D3530" stroke-width="2.2" fill="none"/>
           </g>
           <text x="150" y="42" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" fill="#A06B3E" font-weight="600" letter-spacing="0.5">before</text>
           <line x1="150" y1="0" x2="150" y2="220" stroke="#3D3530" stroke-width="1" opacity="0.15" stroke-dasharray="4 6"/>
-          <rect x="205" y="140" width="10" height="60" rx="3" fill="#C8915F"/>
+          <rect id="story-stake" x="205" y="140" width="10" height="60" rx="3" fill="#C8915F"/>
           <path d="M198 80 L218 80 L213 145 Q208 152 203 145 Z" stroke="#3D3530" stroke-width="2.2" fill="none"/>
           <path d="M200 115 Q208 121 216 115 L213 145 Q208 152 203 145 Z" fill="#7A8C7A" opacity="0.5"/>
           <text x="208" y="42" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" fill="#566B56" font-weight="600" letter-spacing="0.5">after</text>
@@ -479,24 +446,26 @@
   <div class="section-inner">
     <p class="eyebrow" style="margin:0 auto 1rem; display:block;">Five colours</p>
     <h2 class="section-title" style="margin:0 auto 0;">Pick the one that's already in your head.</h2>
+    
+    <!-- Action Note: Change the 'data-img' paths below to your real product image filenames -->
     <div class="colour-row reveal">
-      <div class="colour-chip active" data-name="Sage green">
+      <div class="colour-chip active" data-img="sage.jpg">
         <div class="swatch" style="background:#7A8C7A;"></div>
         <span>Sage green</span>
       </div>
-      <div class="colour-chip" data-name="Terracotta">
+      <div class="colour-chip" data-img="terracotta.jpg">
         <div class="swatch" style="background:#C8915F;"></div>
         <span>Terracotta</span>
       </div>
-      <div class="colour-chip" data-name="Beige / tan">
+      <div class="colour-chip" data-img="beige.jpg">
         <div class="swatch" style="background:#D8C7A8;"></div>
         <span>Beige / tan</span>
       </div>
-      <div class="colour-chip" data-name="Sky blue">
+      <div class="colour-chip" data-img="blue.jpg">
         <div class="swatch" style="background:#9DBFCB;"></div>
         <span>Sky blue</span>
       </div>
-      <div class="colour-chip" data-name="Yellow">
+      <div class="colour-chip" data-img="yellow.jpg">
         <div class="swatch" style="background:#E0B84A;"></div>
         <span>Yellow</span>
       </div>
@@ -514,10 +483,10 @@
 
 <!-- FINAL CTA -->
 <section class="final-cta" id="buy">
-  <p class="hero-eyebrow" style="color:var(--sand); opacity:0.7;">Ready when you are</p>
+  <p class="hero-eyebrow" style="opacity:0.7;">Ready when you are</p>
   <h2 class="section-title reveal">An evening that doesn't spill.</h2>
-  <p class="reveal">Sokl — 220 kr. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
-  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary reveal" target="_blank" rel="noopener">Shop on Etsy</a>
+  <p class="reveal">SOKL — 250 SEK. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
+  <a href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" class="btn-primary reveal" target="_blank" rel="noopener">Shop on Etsy</a>
 </section>
 
 <footer>
@@ -526,19 +495,19 @@
 </footer>
 
 <script>
-  // Dusk gradient tied to scroll progress
   const duskBg = document.getElementById('dusk-bg');
-  const nav = document.getElementById('site-nav');
   const navMark = document.querySelector('.nav-mark');
-  const navMono = document.querySelector('.nav-mono, .mono');
+  const navMono = document.querySelector('.nav-mark .mono');
   const navLink = document.getElementById('nav-cta');
+  const heroPrimaryBtn = document.querySelector('.hero .btn-primary');
+  const heroGhostBtn = document.querySelector('.hero .btn-ghost');
 
   const stops = [
-    {p:0,   c:'#F5EFE0'},
-    {p:0.3, c:'#E4D4BC'},
-    {p:0.6, c:'#9C8267'},
-    {p:0.85,c:'#5A4438'},
-    {p:1,   c:'#2A2220'}
+    {p:0,    c:'#F5EFE0'},
+    {p:0.3,  c:'#E4D4BC'},
+    {p:0.6,  c:'#9C8267'},
+    {p:0.85, c:'#5A4438'},
+    {p:1,    c:'#2A2220'}
   ];
 
   function hexToRgb(hex){
@@ -546,6 +515,7 @@
     return [parseInt(v.substring(0,2),16), parseInt(v.substring(2,4),16), parseInt(v.substring(4,6),16)];
   }
   function lerp(a,b,t){ return a + (b-a)*t; }
+  
   function colorAt(p){
     for(let i=0;i<stops.length-1;i++){
       if(p >= stops[i].p && p <= stops[i+1].p){
@@ -560,6 +530,7 @@
     }
     return stops[stops.length-1].c;
   }
+  
   function luminance(rgbStr){
     const m = rgbStr.match(/\d+/g).map(Number);
     return (0.299*m[0] + 0.587*m[1] + 0.114*m[2]) / 255;
@@ -567,19 +538,28 @@
 
   function onScroll(){
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    const p = Math.min(1, Math.max(0, window.scrollY / max));
+    const p = max <= 0 ? 0 : Math.min(1, Math.max(0, window.scrollY / max));
     const c = colorAt(p);
     duskBg.style.background = c;
 
     const isDark = luminance(c) < 0.5;
-    const textColor = isDark ? '#F5EFE0' : '#3D3530';
-    navMark.style.color = textColor;
-    navLink.style.color = textColor;
-    document.querySelectorAll('.nav-mono, .nav-mark .mono').forEach(el=>{
-      el.style.background = isDark ? '#F5EFE0' : '#3D3530';
-      el.style.color = isDark ? '#3D3530' : '#F5EFE0';
-    });
+    const lightColor = '#F5EFE0';
+    const darkColor = '#3D3530';
+    
+    document.body.style.color = isDark ? lightColor : darkColor;
+    navMark.style.color = isDark ? lightColor : darkColor;
+    navLink.style.color = isDark ? lightColor : darkColor;
+    navLink.style.borderColor = isDark ? lightColor : darkColor;
+    
+    navMono.style.background = isDark ? lightColor : darkColor;
+    navMono.style.color = isDark ? darkColor : lightColor;
+
+    if(heroGhostBtn) {
+      heroGhostBtn.style.color = isDark ? lightColor : darkColor;
+      heroGhostBtn.style.borderColor = isDark ? lightColor : darkColor;
+    }
   }
+  
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 
@@ -592,11 +572,24 @@
   }, {threshold:0.15});
   revealEls.forEach(el=>io.observe(el));
 
-  // Colour chip selection (purely cosmetic / future use)
+  // Interactive Product Color/Image Switcher
+  const productPhoto = document.getElementById('product-photo');
+
   document.querySelectorAll('.colour-chip').forEach(chip=>{
     chip.addEventListener('click', ()=>{
       document.querySelectorAll('.colour-chip').forEach(c=>c.classList.remove('active'));
       chip.classList.add('active');
+      
+      const newImgSrc = chip.getAttribute('data-img');
+      
+      if(productPhoto) {
+        // Smoothly fade out, change source, and fade back in
+        productPhoto.style.opacity = 0;
+        setTimeout(() => {
+          productPhoto.src = newImgSrc;
+          productPhoto.style.opacity = 1;
+        }, 300);
+      }
     });
   });
 </script>
