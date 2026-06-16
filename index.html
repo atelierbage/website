@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier Båge — Sokl, a portable wine stake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --linen:#F5EFE0;
+    --sand:#E8DFD0;
+    --bark:#3D3530;
+    --bark-soft:#5A4F46;
+    --sage:#7A8C7A;
+    --sage-deep:#566B56;
+    --terracotta:#C8915F;
+    --terracotta-deep:#A06B3E;
+    --dusk-1:#F5EFE0;
+    --dusk-2:#E4D4BC;
+    --dusk-3:#9C8267;
+    --dusk-4:#5A4438;
+    --dusk-5:#2A2220;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    background:var(--linen);
+    color:var(--bark);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  .display{font-family:'Fraunces', serif;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+
+  /* ---------- Scroll progress dusk backdrop ---------- */
+  #dusk-bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:linear-gradient(180deg, var(--dusk-1) 0%, var(--dusk-1) 100%);
+    transition:background 0.1s linear;
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1.4rem clamp(1.5rem, 5vw, 4rem);
+    mix-blend-mode:normal;
+  }
+  .nav-mark{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    letter-spacing:-0.01em;
+    color:var(--nav-color, var(--bark));
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+  .nav-mark .mono{
+    width:30px;height:30px;
+    border-radius:50%;
+    background:var(--bark);
+    color:var(--linen);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.85rem;
+    font-weight:600;
+    flex-shrink:0;
+    transition:background 0.4s ease, color 0.4s ease;
+  }
+  .nav-link{
+    font-size:0.85rem;
+    font-weight:500;
+    color:var(--nav-color, var(--bark));
+    border:1px solid currentColor;
+    padding:0.55rem 1.3rem;
+    border-radius:100px;
+    transition:all 0.25s ease;
+    white-space:nowrap;
+  }
+  .nav-link:hover{
+    background:var(--bark);
+    color:var(--linen);
+  }
+
+  section{
+    position:relative;
+    padding:clamp(5rem, 12vw, 9rem) clamp(1.5rem, 6vw, 6rem);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding-top:8rem;
+    gap:2.2rem;
+  }
+  .hero-eyebrow{
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--bark-soft);
+    font-weight:500;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:clamp(2.8rem, 8vw, 6rem);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    max-width:18ch;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--sage-deep);
+  }
+  .hero p{
+    font-size:clamp(1rem, 1.6vw, 1.15rem);
+    color:var(--bark-soft);
+    max-width:38ch;
+    font-weight:400;
+  }
+  .hero-actions{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:0.5rem;
+  }
+  .btn-primary{
+    background:var(--bark);
+    color:var(--linen);
+    padding:0.95rem 2.1rem;
+    border-radius:100px;
+    font-weight:600;
+    font-size:0.95rem;
+    transition:transform 0.25s ease, background 0.25s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{
+    background:var(--sage-deep);
+    transform:translateY(-2px);
+  }
+  .btn-ghost{
+    border:1.5px solid var(--bark);
+    color:var(--bark);
+    padding:0.95rem 2.1rem;
+    border-radius:100px;
+    font-weight:600;
+    font-size:0.95rem;
+    transition:all 0.25s ease;
+  }
+  .btn-ghost:hover{
+    background:var(--bark);
+    color:var(--linen);
+  }
+
+  /* Hero illustration: Sokl planted in grass, line art */
+  .hero-illustration{
+    width:min(420px, 80vw);
+    margin-top:1rem;
+  }
+  .blade{
+    transform-origin:bottom center;
+    animation:sway 6s ease-in-out infinite;
+  }
+  .blade:nth-child(odd){animation-duration:7.5s; animation-delay:0.3s;}
+  .blade:nth-child(3n){animation-duration:5.5s; animation-delay:0.6s;}
+  @keyframes sway{
+    0%,100%{transform:rotate(0deg);}
+    50%{transform:rotate(2.5deg);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .blade{animation:none;}
+  }
+
+  /* ---------- Section shared ---------- */
+  .section-inner{
+    max-width:1140px;
+    margin:0 auto;
+  }
+  .eyebrow{
+    font-size:0.76rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-weight:500;
+    margin-bottom:1rem;
+    opacity:0.65;
+  }
+  .section-title{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:clamp(2rem, 4.5vw, 3.1rem);
+    line-height:1.15;
+    max-width:18ch;
+    margin-bottom:1.4rem;
+  }
+  .section-lede{
+    font-size:1.05rem;
+    max-width:46ch;
+    opacity:0.85;
+  }
+
+  /* ---------- The problem / story section ---------- */
+  .story{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:4rem;
+    align-items:center;
+  }
+  @media (max-width:860px){
+    .story{grid-template-columns:1fr; gap:3rem;}
+  }
+  .story-visual{
+    position:relative;
+  }
+  .moment-card{
+    background:var(--sand);
+    border-radius:28px;
+    padding:2.5rem 2rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .moment-card svg{width:100%;}
+
+  /* ---------- Feature row ---------- */
+  .features{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:2.5rem;
+    margin-top:3.5rem;
+  }
+  @media (max-width:860px){
+    .features{grid-template-columns:1fr; gap:2rem;}
+  }
+  .feature{
+    border-top:1.5px solid currentColor;
+    padding-top:1.5rem;
+    opacity:0.92;
+  }
+  .feature-icon{
+    width:42px;height:42px;
+    margin-bottom:1.2rem;
+  }
+  .feature h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.25rem;
+    margin-bottom:0.6rem;
+  }
+  .feature p{
+    font-size:0.92rem;
+    opacity:0.8;
+  }
+
+  /* ---------- Colour selector section ---------- */
+  .colours{
+    text-align:center;
+  }
+  .colour-row{
+    display:flex;
+    justify-content:center;
+    gap:clamp(0.8rem, 3vw, 2rem);
+    margin-top:3rem;
+    flex-wrap:wrap;
+  }
+  .colour-chip{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0.9rem;
+    cursor:pointer;
+  }
+  .swatch{
+    width:64px;height:64px;
+    border-radius:50%;
+    border:2px solid transparent;
+    transition:transform 0.25s ease, border-color 0.25s ease;
+    position:relative;
+  }
+  .colour-chip:hover .swatch{
+    transform:scale(1.08);
+  }
+  .colour-chip.active .swatch{
+    border-color:var(--bark);
+  }
+  .colour-chip span{
+    font-size:0.82rem;
+    font-weight:500;
+    opacity:0.75;
+  }
+
+  /* ---------- Quote / philosophy ---------- */
+  .philosophy{
+    text-align:center;
+    color:var(--linen);
+  }
+  .philosophy blockquote{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-style:italic;
+    font-size:clamp(1.6rem, 4vw, 2.6rem);
+    line-height:1.35;
+    max-width:22ch;
+    margin:0 auto 1.6rem;
+  }
+  .philosophy cite{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-style:normal;
+    font-size:0.85rem;
+    opacity:0.65;
+    letter-spacing:0.04em;
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{
+    text-align:center;
+    color:var(--linen);
+    min-height:90vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:1.8rem;
+  }
+  .final-cta .section-title{
+    color:var(--linen);
+    margin:0 auto 0.5rem;
+  }
+  .final-cta p{
+    opacity:0.75;
+    max-width:36ch;
+    margin:0 auto;
+  }
+  .final-cta .btn-primary{
+    background:var(--linen);
+    color:var(--dusk-5);
+    margin-top:1rem;
+  }
+  .final-cta .btn-primary:hover{
+    background:var(--sage);
+    color:var(--linen);
+  }
+
+  footer{
+    color:var(--linen);
+    text-align:center;
+    padding:3rem 1.5rem 3.5rem;
+    font-size:0.82rem;
+    opacity:0.55;
+  }
+  footer .foot-mark{
+    font-weight:600;
+    opacity:1;
+    margin-bottom:0.4rem;
+    font-size:0.95rem;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div id="dusk-bg"></div>
+
+<nav id="site-nav">
+  <div class="nav-mark"><span class="mono">ab</span>atelier båge</div>
+  <a class="nav-link" href="#buy" id="nav-cta">See Sokl</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Hand-finished, Gothenburg</p>
+  <h1>A small thing that keeps your evening <em>upright</em>.</h1>
+  <p>Sokl is a portable wine stake — 3D-printed, finished by hand, made to hold a glass steady wherever the grass isn't.</p>
+  <div class="hero-actions">
+    <a href="#buy" class="btn-primary">Get a Sokl — 220 kr</a>
+    <a href="#story" class="btn-ghost">Why it exists</a>
+  </div>
+
+  <svg class="hero-illustration" viewBox="0 0 420 340" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of the Sokl wine stake holding two glasses in grass">
+    <!-- grass blades -->
+    <g stroke="#7A8C7A" stroke-width="3" stroke-linecap="round">
+      <path class="blade" d="M40 320 C 38 280, 50 250, 45 220" />
+      <path class="blade" d="M60 320 C 65 270, 55 240, 62 200" />
+      <path class="blade" d="M85 320 C 80 290, 92 260, 86 235" />
+      <path class="blade" d="M340 320 C 345 280, 332 250, 338 225" />
+      <path class="blade" d="M365 320 C 360 270, 372 245, 364 210" />
+      <path class="blade" d="M390 320 C 385 290, 396 265, 389 240" />
+      <path class="blade" d="M20 320 C 25 295, 15 270, 22 245" />
+    </g>
+    <!-- ground line -->
+    <line x1="0" y1="320" x2="420" y2="320" stroke="#3D3530" stroke-width="1.2" opacity="0.25"/>
+    <!-- stake -->
+    <rect x="203" y="200" width="14" height="120" rx="4" fill="#C8915F"/>
+    <!-- crossbar -->
+    <rect x="150" y="200" width="120" height="16" rx="8" fill="#C8915F"/>
+    <!-- left glass -->
+    <g>
+      <path d="M158 90 L182 90 L176 195 Q170 205 164 195 Z" stroke="#3D3530" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+      <path d="M161 145 Q170 152 179 145 L176 195 Q170 205 164 195 Z" fill="#7A8C7A" opacity="0.55"/>
+    </g>
+    <!-- right glass -->
+    <g>
+      <path d="M238 90 L262 90 L256 195 Q250 205 244 195 Z" stroke="#3D3530" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+      <path d="M241 150 Q250 157 259 150 L256 195 Q250 205 244 195 Z" fill="#C8915F" opacity="0.55"/>
+    </g>
+  </svg>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="section-inner story">
+    <div class="reveal">
+      <p class="eyebrow">How it started</p>
+      <h2 class="section-title">A glass tipped over in the grass. That was sort of it.</h2>
+      <p class="section-lede">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. Sokl started as a fix for one evening and became the first thing Atelier Båge makes.</p>
+    </div>
+    <div class="story-visual reveal">
+      <div class="moment-card">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line illustration of a wine glass tilting before being held steady by Sokl">
+          <ellipse cx="150" cy="200" rx="130" ry="10" fill="#7A8C7A" opacity="0.18"/>
+          <g transform="rotate(-18 90 120)">
+            <path d="M78 60 L102 60 L96 150 Q90 158 84 150 Z" stroke="#3D3530" stroke-width="2.2" fill="none"/>
+          </g>
+          <text x="150" y="42" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" fill="#A06B3E" font-weight="600" letter-spacing="0.5">before</text>
+          <line x1="150" y1="0" x2="150" y2="220" stroke="#3D3530" stroke-width="1" opacity="0.15" stroke-dasharray="4 6"/>
+          <rect x="205" y="140" width="10" height="60" rx="3" fill="#C8915F"/>
+          <path d="M198 80 L218 80 L213 145 Q208 152 203 145 Z" stroke="#3D3530" stroke-width="2.2" fill="none"/>
+          <path d="M200 115 Q208 121 216 115 L213 145 Q208 152 203 145 Z" fill="#7A8C7A" opacity="0.5"/>
+          <text x="208" y="42" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" fill="#566B56" font-weight="600" letter-spacing="0.5">after</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-inner features reveal">
+    <div class="feature">
+      <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="19" stroke="#566B56" stroke-width="2"/><path d="M14 21 L19 27 L29 14" stroke="#566B56" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <h3>Stays put</h3>
+      <p>Stakes into grass, sand, or soft ground. Holds the glass at a steady tilt so nothing spills, even on a slope.</p>
+    </div>
+    <div class="feature">
+      <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><rect x="8" y="8" width="26" height="26" rx="6" stroke="#A06B3E" stroke-width="2"/><path d="M14 21 H28 M21 14 V28" stroke="#A06B3E" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <h3>Folds to pocket size</h3>
+      <p>Collapses flat for the walk there. No bag too small, no picnic too spontaneous.</p>
+    </div>
+    <div class="feature">
+      <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><path d="M21 6 L34 14 V28 L21 36 L8 28 V14 Z" stroke="#3D3530" stroke-width="2" fill="none"/><circle cx="21" cy="21" r="5" stroke="#3D3530" stroke-width="2"/></svg>
+      <h3>Hand-finished, every one</h3>
+      <p>3D-printed in Gothenburg, then sanded and finished by hand. Small batches — never more than the next one needs to be.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLOURS -->
+<section class="colours">
+  <div class="section-inner">
+    <p class="eyebrow" style="margin:0 auto 1rem; display:block;">Five colours</p>
+    <h2 class="section-title" style="margin:0 auto 0;">Pick the one that's already in your head.</h2>
+    <div class="colour-row reveal">
+      <div class="colour-chip active" data-name="Sage green">
+        <div class="swatch" style="background:#7A8C7A;"></div>
+        <span>Sage green</span>
+      </div>
+      <div class="colour-chip" data-name="Terracotta">
+        <div class="swatch" style="background:#C8915F;"></div>
+        <span>Terracotta</span>
+      </div>
+      <div class="colour-chip" data-name="Beige / tan">
+        <div class="swatch" style="background:#D8C7A8;"></div>
+        <span>Beige / tan</span>
+      </div>
+      <div class="colour-chip" data-name="Sky blue">
+        <div class="swatch" style="background:#9DBFCB;"></div>
+        <span>Sky blue</span>
+      </div>
+      <div class="colour-chip" data-name="Yellow">
+        <div class="swatch" style="background:#E0B84A;"></div>
+        <span>Yellow</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="section-inner">
+    <blockquote class="reveal">"Probably the most radical thing you can do right now is make one thing, and make it properly."</blockquote>
+    <cite class="reveal">— Arnaud, Atelier Båge</cite>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="buy">
+  <p class="hero-eyebrow" style="color:var(--sand); opacity:0.7;">Ready when you are</p>
+  <h2 class="section-title reveal">An evening that doesn't spill.</h2>
+  <p class="reveal">Sokl — 220 kr. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
+  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary reveal" target="_blank" rel="noopener">Shop on Etsy</a>
+</section>
+
+<footer>
+  <div class="foot-mark">atelier båge</div>
+  <p>Gothenburg, Sweden — made with French intention.</p>
+</footer>
+
+<script>
+  // Dusk gradient tied to scroll progress
+  const duskBg = document.getElementById('dusk-bg');
+  const nav = document.getElementById('site-nav');
+  const navMark = document.querySelector('.nav-mark');
+  const navMono = document.querySelector('.nav-mono, .mono');
+  const navLink = document.getElementById('nav-cta');
+
+  const stops = [
+    {p:0,   c:'#F5EFE0'},
+    {p:0.3, c:'#E4D4BC'},
+    {p:0.6, c:'#9C8267'},
+    {p:0.85,c:'#5A4438'},
+    {p:1,   c:'#2A2220'}
+  ];
+
+  function hexToRgb(hex){
+    const v = hex.replace('#','');
+    return [parseInt(v.substring(0,2),16), parseInt(v.substring(2,4),16), parseInt(v.substring(4,6),16)];
+  }
+  function lerp(a,b,t){ return a + (b-a)*t; }
+  function colorAt(p){
+    for(let i=0;i<stops.length-1;i++){
+      if(p >= stops[i].p && p <= stops[i+1].p){
+        const localT = (p - stops[i].p) / (stops[i+1].p - stops[i].p);
+        const c1 = hexToRgb(stops[i].c);
+        const c2 = hexToRgb(stops[i+1].c);
+        const r = Math.round(lerp(c1[0], c2[0], localT));
+        const g = Math.round(lerp(c1[1], c2[1], localT));
+        const b = Math.round(lerp(c1[2], c2[2], localT));
+        return `rgb(${r},${g},${b})`;
+      }
+    }
+    return stops[stops.length-1].c;
+  }
+  function luminance(rgbStr){
+    const m = rgbStr.match(/\d+/g).map(Number);
+    return (0.299*m[0] + 0.587*m[1] + 0.114*m[2]) / 255;
+  }
+
+  function onScroll(){
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p = Math.min(1, Math.max(0, window.scrollY / max));
+    const c = colorAt(p);
+    duskBg.style.background = c;
+
+    const isDark = luminance(c) < 0.5;
+    const textColor = isDark ? '#F5EFE0' : '#3D3530';
+    navMark.style.color = textColor;
+    navLink.style.color = textColor;
+    document.querySelectorAll('.nav-mono, .nav-mark .mono').forEach(el=>{
+      el.style.background = isDark ? '#F5EFE0' : '#3D3530';
+      el.style.color = isDark ? '#3D3530' : '#F5EFE0';
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Colour chip selection (purely cosmetic / future use)
+  document.querySelectorAll('.colour-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.colour-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
