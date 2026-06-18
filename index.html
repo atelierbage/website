@@ -56,26 +56,14 @@
     transition: background 0.3s ease;
   }
   .nav-mark{
-    font-family:'Plus Jakarta Sans', sans-serif;
-    font-weight:600;
-    font-size:1.05rem;
-    letter-spacing:-0.01em;
-    color:var(--bark);
     display:flex;
     align-items:center;
-    gap:0.5rem;
-    transition: color 0.3s ease;
   }
-  .nav-mark .mono{
-    width:30px;height:30px;
-    border-radius:50%;
-    background:var(--bark);
-    color:var(--linen);
-    display:flex;align-items:center;justify-content:center;
-    font-size:0.85rem;
-    font-weight:600;
-    flex-shrink:0;
-    transition:background 0.3s ease, color 0.3s ease;
+  .nav-logo{
+    width:38px;
+    height:38px;
+    object-fit:contain;
+    transition: filter 0.3s ease; /* Supports smooth look if inverted on scroll */
   }
   .nav-link{
     font-size:0.85rem;
@@ -376,7 +364,9 @@
 <div id="dusk-bg"></div>
 
 <nav id="site-nav">
-  <div class="nav-mark"><span class="mono">ab</span>atelier båge</div>
+  <div class="nav-mark">
+    <img class="nav-logo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Ny logo round.png" alt="Atelier Båge Logo">
+  </div>
   <a class="nav-link" href="https://www.instagram.com/atelier.bage/" id="nav-cta" target="_blank" rel="noopener">Instagram</a>
 </nav>
 
@@ -448,7 +438,7 @@
         <div class="swatch" style="background:#C8915F;"></div>
         <span>Terracotta</span>
       </div>
-      <div class="colour-chip" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Beige.jpg">
+      <div class="colour-chip" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Beige.png">
         <div class="swatch" style="background:#D8C7A8;"></div>
         <span>Beige / tan</span>
       </div>
@@ -491,7 +481,7 @@
 <script>
   const duskBg = document.getElementById('dusk-bg');
   const navMark = document.querySelector('.nav-mark');
-  const navMono = document.querySelector('.nav-mark .mono');
+  const navLogo = document.querySelector('.nav-logo'); // Reference your new image logo
   const navLink = document.getElementById('nav-cta');
   const heroPrimaryBtn = document.querySelector('.hero .btn-primary');
   const heroGhostBtn = document.querySelector('.hero .btn-ghost');
@@ -541,12 +531,13 @@
     const darkColor = '#3D3530';
     
     document.body.style.color = isDark ? lightColor : darkColor;
-    navMark.style.color = isDark ? lightColor : darkColor;
     navLink.style.color = isDark ? lightColor : darkColor;
     navLink.style.borderColor = isDark ? lightColor : darkColor;
-    
-    navMono.style.background = isDark ? lightColor : darkColor;
-    navMono.style.color = isDark ? darkColor : lightColor;
+
+    // Optional: invert the round logo colors slightly if the dark theme hits to make it visible
+    if (navLogo) {
+      navLogo.style.filter = isDark ? 'invert(1) brightness(1.5)' : 'none';
+    }
 
     if(heroGhostBtn) {
       heroGhostBtn.style.color = isDark ? lightColor : darkColor;
