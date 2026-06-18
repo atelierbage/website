@@ -173,20 +173,6 @@
     color:var(--linen);
   }
 
-  /* Container for the dynamic product photo */
-  .hero-image-container {
-    width: min(450px, 85vw);
-    margin-top: 1.5rem;
-    border-radius: 24px;
-    overflow: hidden;
-  }
-  .hero-image-container img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
-  }
-
   /* ---------- Section shared ---------- */
   .section-inner{
     max-width:1140px;
@@ -304,6 +290,20 @@
     opacity:0.75;
   }
 
+  /* Container for the dynamic product photo placed below colors */
+  .hero-image-container {
+    width: min(450px, 85vw);
+    margin: 3rem auto 0;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .hero-image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
   /* ---------- Quote / philosophy ---------- */
   .philosophy{
     text-align:center;
@@ -380,7 +380,6 @@
   <a class="nav-link" href="https://www.instagram.com/atelier.bage/" id="nav-cta" target="_blank" rel="noopener">Instagram</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow">Hand-finished, Gothenburg</p>
   <h1>A small thing that keeps your evening <em>upright</em>.</h1>
@@ -389,14 +388,8 @@
     <a href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" class="btn-primary" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
     <a href="https://www.etsy.com/se-en/shop/AtelierBage?ref=shop-header-name&listing_id=4503765469&from_page=listing#about" class="btn-ghost" target="_blank" rel="noopener">Why it exists</a>
   </div>
-
-  <!-- Main dynamic product image container (Updated for GitHub) -->
-  <div class="hero-image-container">
-    <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="SOKL portable wine stake">
-  </div>
 </section>
 
-<!-- STORY -->
 <section id="story">
   <div class="section-inner story">
     <div class="reveal">
@@ -441,13 +434,11 @@
   </div>
 </section>
 
-<!-- COLOURS -->
 <section class="colours">
   <div class="section-inner">
     <p class="eyebrow" style="margin:0 auto 1rem; display:block;">Five colours</p>
     <h2 class="section-title" style="margin:0 auto 0;">Pick the one that's already in your head.</h2>
     
-    <!-- Updated data-img URLs to fetch from GitHub raw content -->
     <div class="colour-row reveal">
       <div class="colour-chip active" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png">
         <div class="swatch" style="background:#7A8C7A;"></div>
@@ -470,10 +461,14 @@
         <span>Yellow</span>
       </div>
     </div>
+
+    <div class="hero-image-container reveal">
+      <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="SOKL portable wine stake">
+    </div>
+
   </div>
 </section>
 
-<!-- PHILOSOPHY -->
 <section class="philosophy">
   <div class="section-inner">
     <blockquote class="reveal">"Probably the most radical thing you can do right now is make one thing, and make it properly."</blockquote>
@@ -481,7 +476,6 @@
   </div>
 </section>
 
-<!-- FINAL CTA -->
 <section class="final-cta" id="buy">
   <p class="hero-eyebrow" style="opacity:0.7;">Ready when you are</p>
   <h2 class="section-title reveal">An evening that doesn't spill.</h2>
@@ -510,7 +504,6 @@
     {p:1,    c:'#2A2220'}
   ];
 
-  // Rest of script remains completely untouched so the background & switches function beautifully
   function hexToRgb(hex){
     const v = hex.replace('#','');
     return [parseInt(v.substring(0,2),16), parseInt(v.substring(2,4),16), parseInt(v.substring(4,6),16)];
