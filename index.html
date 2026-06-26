@@ -208,58 +208,67 @@
     position:relative;
     overflow:hidden;
     transition: background 0.3s ease;
-    min-height: 320px;
+    min-height: 380px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   
-  /* Container for your glass graphic & stake wrapper */
+  /* Fixed positioning wrapper for structural canvas */
   .animation-wrapper {
     position: relative;
-    width: 160px;
-    height: 200px;
+    width: 140px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
   }
 
-  /* Your official external glass illustration from GitHub */
+  /* Rotational structural controller for your custom SVG */
+  .glass-balancer {
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom center; /* Pivot neatly directly from base plate */
+    transition: transform 0.1s ease-out;
+    position: relative;
+    z-index: 2;
+  }
+
   .glass-graphic {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transform-origin: bottom center; /* Rotates beautifully from its base */
-    transition: transform 0.1s ease-out;
-    position: relative;
-    z-index: 5;
   }
 
-  /* Pure CSS SOKL Stake that interacts with your glass */
+  /* Structural overlapping alignment for SOKL stake */
   .sokl-stake {
     position: absolute;
-    bottom: 5px;
+    bottom: -15px; 
     left: 50%;
     transform: translateX(-50%);
-    width: 14px;
-    height: 65px;
+    width: 12px;
+    height: 85px;
     background: var(--terracotta);
     border-radius: 4px;
-    z-index: 2;
+    z-index: 10; /* Brought forward to visually capture the glass */
     transition: transform 0.1s ease-out, opacity 0.1s ease-out;
   }
 
+  /* Minimalist structural locking collar */
   .sokl-stake::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -8px;
-    width: 30px;
+    top: 15px;
+    left: -7px;
+    width: 26px;
     height: 8px;
     background: var(--bark);
     border-radius: 2px;
   }
 
   #status-label {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -447,7 +456,9 @@
     <div class="story-visual reveal">
       <div class="moment-card">
         <div class="animation-wrapper">
-          <img id="scroll-glass" class="glass-graphic" src="https://raw.githubusercontent.com/atelierbage/website/main/img/verre.svg" alt="Wine Glass Outline">
+          <div id="scroll-glass-balancer" class="glass-balancer">
+            <img class="glass-graphic" src="https://raw.githubusercontent.com/atelierbage/website/main/img/verre.svg" alt="Wine Glass Outline">
+          </div>
           <div id="scroll-sokl" class="sokl-stake"></div>
         </div>
         <div id="status-label">Unstable ground</div>
@@ -536,8 +547,8 @@
   const heroPrimaryBtn = document.querySelector('.hero .btn-primary');
   const heroGhostBtn = document.querySelector('.hero .btn-ghost');
 
-  // Interactive targets
-  const scrollGlass = document.getElementById('scroll-glass');
+  // New clean target selectors
+  const scrollGlassBalancer = document.getElementById('scroll-glass-balancer');
   const scrollSokl = document.getElementById('scroll-sokl');
   const statusLabel = document.getElementById('status-label');
   const storySection = document.getElementById('story');
@@ -599,7 +610,7 @@
       heroGhostBtn.style.borderColor = isDark ? lightColor : darkColor;
     }
 
-    // --- TRACK SCROLL POSITION OVER THE STORY CARD ---
+    // --- ACCURATE COMPRESSION BASED ON VIEWPORT TRANSITION ---
     if (storySection) {
       const rect = storySection.getBoundingClientRect();
       const viewHeight = window.innerHeight;
@@ -609,36 +620,40 @@
 
       if (sectionProgress > 0 && sectionProgress < 1) {
         let angle = 0;
-        let soklY = 60;
+        let soklY = 90;
         let soklOpacity = 0;
         let labelText = "Unstable ground";
 
         if (sectionProgress <= 0.45) {
-          // Glass starts to tilt over
+          // Glass begins tilting smoothly
           const t1 = sectionProgress / 0.45;
-          angle = lerp(0, 24, t1); 
-          soklY = 60;
+          angle = lerp(0, 18, t1); 
+          soklY = 90;
           soklOpacity = 0;
           labelText = "Unstable ground";
         } else if (sectionProgress > 0.45 && sectionProgress <= 0.65) {
-          // SOKL slides up and locks the glass back straight
+          // SOKL slides upward and snaps the balancer straight
           const t2 = (sectionProgress - 0.45) / 0.20;
-          angle = lerp(24, 0, t2);
-          soklY = lerp(60, 0, t2);
+          angle = lerp(18, 0, t2);
+          soklY = lerp(90, 0, t2);
           soklOpacity = lerp(0, 1, t2);
           labelText = "Saved by SOKL";
         } else {
-          // Saved state stays locked in place
+          // Stable configuration locked
           angle = 0;
           soklY = 0;
           soklOpacity = 1;
           labelText = "Saved by SOKL";
         }
 
-        // Apply real-time visual properties
-        scrollGlass.style.transform = `rotate(${angle}deg)`;
-        scrollSokl.style.transform = `translate(-50%, ${soklY}px)`;
-        scrollSokl.style.opacity = soklOpacity;
+        // Apply visual properties to balancer and stake elements
+        if(scrollGlassBalancer) {
+          scrollGlassBalancer.style.transform = `rotate(${angle}deg)`;
+        }
+        if(scrollSokl) {
+          scrollSokl.style.transform = `translate(-50%, ${soklY}px)`;
+          scrollSokl.style.opacity = soklOpacity;
+        }
         if(statusLabel) statusLabel.textContent = labelText;
       }
     }
