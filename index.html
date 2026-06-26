@@ -63,7 +63,7 @@
     width:38px;
     height:38px;
     object-fit:contain;
-    transition: filter 0.3s ease; /* Supports smooth look if inverted on scroll */
+    transition: filter 0.3s ease; 
   }
   .nav-link{
     font-size:0.85rem;
@@ -204,12 +204,69 @@
   .moment-card{
     background:var(--sand);
     border-radius:28px;
-    padding:2.5rem 2rem;
+    padding:3.5rem 2rem;
     position:relative;
     overflow:hidden;
     transition: background 0.3s ease;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  .moment-card svg{width:100%;}
+  
+  /* Container for your glass graphic & stake wrapper */
+  .animation-wrapper {
+    position: relative;
+    width: 160px;
+    height: 200px;
+  }
+
+  /* Your official external glass illustration from GitHub */
+  .glass-graphic {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform-origin: bottom center; /* Rotates beautifully from its base */
+    transition: transform 0.1s ease-out;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* Pure CSS SOKL Stake that interacts with your glass */
+  .sokl-stake {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 65px;
+    background: var(--terracotta);
+    border-radius: 4px;
+    z-index: 2;
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  }
+
+  .sokl-stake::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 30px;
+    height: 8px;
+    background: var(--bark);
+    border-radius: 2px;
+  }
+
+  #status-label {
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    transition: color 0.3s ease;
+  }
 
   /* ---------- Features row ---------- */
   .features{
@@ -389,18 +446,11 @@
     </div>
     <div class="story-visual reveal">
       <div class="moment-card">
-        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line illustration of a wine glass tilting before being held steady by SOKL">
-          <ellipse cx="150" cy="200" rx="130" ry="10" fill="#7A8C7A" opacity="0.18"/>
-          <g transform="rotate(-18 90 120)">
-            <path d="M78 60 L102 60 L96 150 Q90 158 84 150 Z" stroke="#3D3530" stroke-width="2.2" fill="none"/>
-          </g>
-          <text x="150" y="42" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" fill="#A06B3E" font-weight="600" letter-spacing="0.5">before</text>
-          <line x1="150" y1="0" x2="150" y2="220" stroke="#3D3530" stroke-width="1" opacity="0.15" stroke-dasharray="4 6"/>
-          <rect id="story-stake" x="205" y="140" width="10" height="60" rx="3" fill="#C8915F"/>
-          <path d="M198 80 L218 80 L213 145 Q208 152 203 145 Z" stroke="#3D3530" stroke-width="2.2" fill="none"/>
-          <path d="M200 115 Q208 121 216 115 L213 145 Q208 152 203 145 Z" fill="#7A8C7A" opacity="0.5"/>
-          <text x="208" y="42" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="13" fill="#566B56" font-weight="600" letter-spacing="0.5">after</text>
-        </svg>
+        <div class="animation-wrapper">
+          <img id="scroll-glass" class="glass-graphic" src="https://raw.githubusercontent.com/atelierbage/website/main/img/verre.svg" alt="Wine Glass Outline">
+          <div id="scroll-sokl" class="sokl-stake"></div>
+        </div>
+        <div id="status-label">Unstable ground</div>
       </div>
     </div>
   </div>
@@ -428,7 +478,7 @@
   <div class="section-inner">
     <p class="eyebrow" style="margin:0 auto 1rem; display:block;">Five colours</p>
     <h2 class="section-title" style="margin:0 auto 0;">Pick the one that's already in your head.</h2>
-    
+     
     <div class="colour-row reveal">
       <div class="colour-chip active" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png">
         <div class="swatch" style="background:#7A8C7A;"></div>
@@ -481,10 +531,16 @@
 <script>
   const duskBg = document.getElementById('dusk-bg');
   const navMark = document.querySelector('.nav-mark');
-  const navLogo = document.querySelector('.nav-logo'); // Reference your new image logo
+  const navLogo = document.querySelector('.nav-logo'); 
   const navLink = document.getElementById('nav-cta');
   const heroPrimaryBtn = document.querySelector('.hero .btn-primary');
   const heroGhostBtn = document.querySelector('.hero .btn-ghost');
+
+  // Interactive targets
+  const scrollGlass = document.getElementById('scroll-glass');
+  const scrollSokl = document.getElementById('scroll-sokl');
+  const statusLabel = document.getElementById('status-label');
+  const storySection = document.getElementById('story');
 
   const stops = [
     {p:0,    c:'#F5EFE0'},
@@ -534,7 +590,6 @@
     navLink.style.color = isDark ? lightColor : darkColor;
     navLink.style.borderColor = isDark ? lightColor : darkColor;
 
-    // Optional: invert the round logo colors slightly if the dark theme hits to make it visible
     if (navLogo) {
       navLogo.style.filter = isDark ? 'invert(1) brightness(1.5)' : 'none';
     }
@@ -542,6 +597,50 @@
     if(heroGhostBtn) {
       heroGhostBtn.style.color = isDark ? lightColor : darkColor;
       heroGhostBtn.style.borderColor = isDark ? lightColor : darkColor;
+    }
+
+    // --- TRACK SCROLL POSITION OVER THE STORY CARD ---
+    if (storySection) {
+      const rect = storySection.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      
+      let sectionProgress = (window.scrollY - (window.scrollY + rect.top - viewHeight)) / (rect.height + viewHeight);
+      sectionProgress = Math.min(1, Math.max(0, sectionProgress));
+
+      if (sectionProgress > 0 && sectionProgress < 1) {
+        let angle = 0;
+        let soklY = 60;
+        let soklOpacity = 0;
+        let labelText = "Unstable ground";
+
+        if (sectionProgress <= 0.45) {
+          // Glass starts to tilt over
+          const t1 = sectionProgress / 0.45;
+          angle = lerp(0, 24, t1); 
+          soklY = 60;
+          soklOpacity = 0;
+          labelText = "Unstable ground";
+        } else if (sectionProgress > 0.45 && sectionProgress <= 0.65) {
+          // SOKL slides up and locks the glass back straight
+          const t2 = (sectionProgress - 0.45) / 0.20;
+          angle = lerp(24, 0, t2);
+          soklY = lerp(60, 0, t2);
+          soklOpacity = lerp(0, 1, t2);
+          labelText = "Saved by SOKL";
+        } else {
+          // Saved state stays locked in place
+          angle = 0;
+          soklY = 0;
+          soklOpacity = 1;
+          labelText = "Saved by SOKL";
+        }
+
+        // Apply real-time visual properties
+        scrollGlass.style.transform = `rotate(${angle}deg)`;
+        scrollSokl.style.transform = `translate(-50%, ${soklY}px)`;
+        scrollSokl.style.opacity = soklOpacity;
+        if(statusLabel) statusLabel.textContent = labelText;
+      }
     }
   }
   
