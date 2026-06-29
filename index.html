@@ -8,229 +8,155 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --linen:#F5EFE0;
-    --sand:#E8DFD0;
-    --bark:#3D3530;
-    --bark-soft:#5A4F46;
-    --sage:#7A8C7A;
-    --sage-deep:#566B56;
-    --terracotta:#C8915F;
-    --terracotta-deep:#A06B3E;
+    --linen:#F5EFE0;--sand:#E8DFD0;--bark:#3D3530;--bark-soft:#5A4F46;
+    --sage:#7A8C7A;--sage-deep:#566B56;--terracotta:#C8915F;--terracotta-deep:#A06B3E;
+    --grass-green:#4A6B4A;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    font-family:'Plus Jakarta Sans', sans-serif;
-    background:var(--linen);
-    color:var(--bark);
-    overflow-x:hidden;
-    line-height:1.6;
-    transition:color 0.3s ease;
-  }
-  .display{font-family:'Fraunces', serif;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--linen);color:var(--bark);overflow-x:hidden;line-height:1.6;transition:color 0.3s ease;}
   a{color:inherit;text-decoration:none;}
   img,svg{display:block;max-width:100%;}
 
-  /* ---------- Background container ---------- */
-  #dusk-bg{
-    position:fixed;
-    inset:0;
-    z-index:1;
-    background:var(--linen);
-    pointer-events:none;
-  }
+  #dusk-bg{position:fixed;inset:0;z-index:-2;background:var(--linen);}
 
-  /* ---------- Navigation layout ---------- */
-  nav{
-    position:fixed;
-    top:0;left:0;right:0;
-    z-index:100;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:1.4rem clamp(1.5rem, 5vw, 4rem);
-  }
-  .nav-mark{ display:flex; align-items:center; }
-  .nav-logo{ width:38px; height:38px; object-fit:contain; }
-  .nav-link{
-    font-size:0.85rem;
-    font-weight:500;
-    color:var(--bark);
-    border:1px solid currentColor;
-    padding:0.55rem 1.3rem;
-    border-radius:100px;
-    transition:all 0.3s ease;
-    white-space:nowrap;
-  }
-  .nav-link:hover{ background:var(--bark); color:var(--linen); }
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:1.4rem clamp(1.5rem,5vw,4rem);}
+  .nav-mark{display:flex;align-items:center;gap:0.55rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:1rem;}
+  .nav-ab{width:34px;height:34px;border-radius:50%;background:var(--bark);color:var(--linen);display:flex;align-items:center;justify-content:center;font-size:0.88rem;font-weight:700;flex-shrink:0;transition:background 0.3s ease,color 0.3s ease;}
+  .nav-name{transition:color 0.3s ease;}
+  .nav-link{font-size:0.85rem;font-weight:500;border:1px solid currentColor;padding:0.55rem 1.3rem;border-radius:100px;transition:all 0.25s ease;white-space:nowrap;}
+  .nav-link:hover{background:var(--bark);color:var(--linen);}
 
-  /* ---------- Permanent Foreground Master Glass Viewport ---------- */
-  #master-glass-viewport {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -42%); /* Shift up slightly for text layout comfort below */
-    width: min(280px, 65vw);
-    height: min(400px, 55vh);
-    pointer-events: none;
-    z-index: 10; /* Fixed high visibility layering above backdrops */
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-  }
+  section{position:relative;padding:clamp(5rem,12vw,9rem) clamp(1.5rem,6vw,6rem);}
 
-  .glass-balancer {
-    width: 100%;
-    height: 100%;
-    transform-origin: bottom center; /* Pivot center localized on the base plate */
-    position: relative;
-  }
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:4rem;position:relative;z-index:5;}
+  .hero-fade-container{display:flex;flex-direction:column;align-items:center;gap:2.2rem;transition:opacity 0.1s linear,transform 0.1s linear;will-change:transform,opacity;}
+  .hero-eyebrow{font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--bark-soft);font-weight:500;transition:color 0.3s ease;}
+  .hero h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.8rem,8vw,6.5rem);line-height:1.02;letter-spacing:-0.01em;max-width:16ch;transition:color 0.3s ease;}
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--sage-deep);transition:color 0.3s ease;}
+  .hero p{font-size:clamp(1rem,1.6vw,1.15rem);color:var(--bark-soft);max-width:38ch;font-weight:400;}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:0.5rem;}
 
-  .glass-graphic {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  /* MASTER VIEWPORT (Dual Glasses Layout) */
+  #master-glass-viewport{
+    position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:min(280px,65vw);height:min(340px,52vh);
+    pointer-events:none;z-index:-1;
+    display:flex;justify-content:center;align-items:flex-end;
   }
-
-  /* ---------- Integrated SOKL Stake Component ---------- */
-  .sokl-stake {
-    position: absolute;
-    bottom: -10px; 
-    left: 50%;
-    transform: translateX(-50%) translateY(160px);
-    width: 14px;
-    height: 100px;
-    background: var(--terracotta);
-    border-radius: 4px;
-    z-index: 15;
-    opacity: 0;
-  }
-  .sokl-stake::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: -7px;
-    width: 28px;
-    height: 9px;
-    background: var(--bark);
-    border-radius: 2px;
-  }
-
-  /* ---------- Structural Scaffolding Sections ---------- */
-  section {
-    position: relative;
-    z-index: 20; 
-    padding: clamp(6rem, 15vw, 12rem) clamp(1.5rem, 6vw, 6rem);
-  }
-
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding-top: 4rem;
-  }
-  .hero-fade-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2.2rem;
-    will-change: transform, opacity;
-  }
-  .hero-eyebrow {
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--bark-soft);
-    font-weight: 500;
-  }
-  .hero h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    font-size: clamp(2.8rem, 8vw, 6.5rem);
-    line-height: 1.02;
-    letter-spacing: -0.01em;
-    max-width: 16ch;
-  }
-  .hero h1 em { font-style: italic; font-weight: 500; color: var(--sage-deep); }
-  .hero p { font-size: clamp(1rem, 1.6vw, 1.15rem); color: var(--bark-soft); max-width: 38ch; }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
-
-  /* ---------- Part 3: Sequential Story Section ---------- */
-  .story-viewport-tracker {
-    min-height: 130vh; /* Room to stretch out scroll physics sequence */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* Pushes content below the viewport center */
-    align-items: center;
-    padding-bottom: 8rem;
-  }
-
-  .story-text-content {
-    max-width: 620px;
-    text-align: center;
-    opacity: 0; /* Animated systematically by JS scroll metrics */
-    transform: translateY(30px);
-    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-  }
-
-  /* ---------- Global Utilities ---------- */
-  .btn-primary {
-    background: var(--bark); color: var(--linen); padding: 0.95rem 2.1rem; border-radius: 100px;
-    font-weight: 600; font-size: 0.95rem; transition: transform 0.25s ease, background 0.25s ease;
-    display: inline-block;
-  }
-  .btn-primary:hover { background: var(--sage-deep); transform: translateY(-2px); }
   
-  .btn-ghost {
-    border: 1.5px solid var(--bark); color: var(--bark); padding: 0.95rem 2.1rem; border-radius: 100px;
-    font-weight: 600; font-size: 0.95rem; transition: all 0.25s ease;
+  .dual-glass-wrapper {
+    width:100%;height:100%;
+    position:relative;
+    display:flex;justify-content:center;align-items:flex-end;
   }
-  .btn-ghost:hover { background: var(--bark); color: var(--linen); }
 
-  .section-inner { max-width: 1140px; margin: 0 auto; }
-  .eyebrow { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; margin-bottom: 1rem; opacity: 0.65; }
-  .section-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(2rem, 4.5vw, 3.1rem); line-height: 1.15; margin-bottom: 1.4rem; }
-  .section-lede { font-size: 1.05rem; opacity: 0.85; }
+  /* Independent Glass Balancers for outward swinging action */
+  .glass-balancer{
+    position:absolute;bottom:0;
+    width:50%;height:100%;
+    display:flex;justify-content:center;align-items:flex-end;
+    transition:transform 0.05s ease-out;
+  }
+  .glass-left { left:0; transform-origin: bottom right; }
+  .glass-right { right:0; transform-origin: bottom left; }
+  
+  .wine-glass-svg{width:100%;height:100%;overflow:visible;}
 
-  /* ---------- Features Grid ---------- */
-  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 3.5rem; }
-  @media (max-width:860px){ .features { grid-template-columns: 1fr; gap: 2rem; } }
-  .feature { border-top: 1.5px solid currentColor; padding-top: 1.5rem; opacity: 0.92; }
-  .feature-icon { width: 42px; height: 42px; margin-bottom: 1.2rem; }
-  .feature h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.25rem; margin-bottom: 0.6rem; }
-  .feature p { font-size: 0.92rem; opacity: 0.8; }
+  /* SOKL Assembly with Integrated Grass Base */
+  .sokl-assembly{
+    position:absolute;bottom:-8px;left:50%;
+    transform:translateX(-50%) translateY(140px);
+    width:70px;
+    height:130px;
+    z-index:10;
+    opacity:1; /* Always visible at the bottom of viewport */
+    transition:transform 0.05s ease-out;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+  }
+  
+  /* SOKL Twin Head & Stake */
+  .sokl-stake{
+    width:12px;height:72px;background:var(--terracotta);border-radius:4px;
+    position:relative;
+  }
+  /* Dual Grab Clips */
+  .sokl-stake::before{
+    content:'';position:absolute;top:10px;left:-16px;
+    width:44px;height:10px;background:var(--terracotta-deep);border-radius:4px;
+  }
 
-  /* ---------- Colour Engine Area ---------- */
-  .colours { text-align: center; }
-  .colour-row { display: flex; justify-content: center; gap: clamp(0.8rem, 3vw, 2rem); margin-top: 3rem; flex-wrap: wrap; }
-  .colour-chip { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; cursor: pointer; }
-  .swatch { width: 64px; height: 64px; border-radius: 50%; border: 2px solid transparent; transition: transform 0.25s ease, border-color 0.25s ease; position: relative; }
-  .colour-chip:hover .swatch { transform: scale(1.08); }
-  .colour-chip.active .swatch { border-color: currentColor; }
-  .colour-chip span { font-size: 0.82rem; font-weight: 500; opacity: 0.75; }
+  /* Grass Tuft Element */
+  .grass-base {
+    width:56px;
+    height:22px;
+    fill:var(--grass-green);
+    margin-top:-2px;
+  }
 
-  .hero-image-container { width: min(450px, 85vw); margin: 3rem auto 0; border-radius: 24px; overflow: hidden; }
-  .hero-image-container img { width: 100%; height: auto; object-fit: cover; transition: opacity 0.3s ease; }
+  /* STORY */
+  .story-container{max-width:780px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .story-visual{width:100%;max-width:640px;position:relative;}
+  .moment-card{background:var(--sand);border-radius:32px;padding:3.5rem 2rem;min-height:440px;width:100%;transition:background 0.3s ease;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;}
+  #status-label{margin-top:1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;opacity:0.4;transition:color 0.3s ease;}
 
-  /* ---------- Philosophy Block ---------- */
-  .philosophy { text-align: center; }
-  .philosophy blockquote { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.35; max-width: 22ch; margin: 0 auto 1.6rem; }
-  .philosophy cite { font-family: 'Plus Jakarta Sans', sans-serif; font-style: normal; font-size: 0.85rem; opacity: 0.65; letter-spacing: 0.04em; }
+  .story-text-content{
+    max-width:580px;margin-top:3rem;
+    opacity:0;transform:translateY(18px);
+    transition:opacity 0.7s ease,transform 0.7s ease;
+  }
+  .story-text-content.visible{opacity:1;transform:translateY(0);}
 
-  /* ---------- Conversion Call to Action ---------- */
-  .final-cta { text-align: center; min-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem; }
-  .final-cta .section-title { margin: 0 auto 0.5rem; }
-  .final-cta p { opacity: 0.75; max-width: 36ch; margin: 0 auto; }
-  .final-cta .btn-primary:hover { background: var(--sage); }
+  /* SHARED */
+  .btn-primary{background:var(--bark);color:var(--linen);padding:0.95rem 2.1rem;border-radius:100px;font-weight:600;font-size:0.95rem;transition:transform 0.25s ease,background 0.25s ease,color 0.25s ease;display:inline-block;}
+  .btn-primary:hover{background:var(--sage-deep);transform:translateY(-2px);}
+  .btn-ghost{border:1.5px solid currentColor;padding:0.95rem 2.1rem;border-radius:100px;font-weight:600;font-size:0.95rem;transition:all 0.25s ease;}
+  .btn-ghost:hover{background:var(--bark);color:var(--linen);}
+  .section-inner{max-width:1140px;margin:0 auto;}
+  .eyebrow{font-size:0.76rem;letter-spacing:0.16em;text-transform:uppercase;font-weight:500;margin-bottom:1rem;opacity:0.65;}
+  .section-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,4.5vw,3.1rem);line-height:1.15;margin-bottom:1.4rem;}
+  .section-lede{font-size:1.05rem;opacity:0.85;}
 
-  footer { text-align: center; padding: 3rem 1.5rem 3.5rem; font-size: 0.82rem; opacity: 0.55; }
-  footer .foot-mark { font-weight: 600; opacity: 1; margin-bottom: 0.4rem; font-size: 0.95rem; }
+  /* FEATURES */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;margin-top:4rem;}
+  @media(max-width:860px){.features{grid-template-columns:1fr;gap:2rem;}}
+  .feature{border-top:1.5px solid currentColor;padding-top:1.5rem;opacity:0.92;}
+  .feature-icon{width:42px;height:42px;margin-bottom:1.2rem;}
+  .feature h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.25rem;margin-bottom:0.6rem;}
+  .feature p{font-size:0.92rem;opacity:0.8;}
 
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.in { opacity: 1; transform: translateY(0); }
+  /* COLOURS */
+  .colours{text-align:center;}
+  .colour-row{display:flex;justify-content:center;gap:clamp(0.8rem,3vw,2rem);margin-top:3rem;flex-wrap:wrap;}
+  .colour-chip{display:flex;flex-direction:column;align-items:center;gap:0.9rem;cursor:pointer;}
+  .swatch{width:64px;height:64px;border-radius:50%;border:2px solid transparent;transition:transform 0.25s ease,border-color 0.25s ease;}
+  .colour-chip:hover .swatch{transform:scale(1.08);}
+  .colour-chip.active .swatch{border-color:currentColor;}
+  .colour-chip span{font-size:0.82rem;font-weight:500;opacity:0.75;}
+  .hero-image-container{width:min(420px,80vw);margin:3rem auto 0;border-radius:24px;overflow:hidden;}
+  .hero-image-container img{width:100%;height:auto;object-fit:cover;transition:opacity 0.3s ease;}
+
+  /* PHILOSOPHY */
+  .philosophy{text-align:center;}
+  .philosophy blockquote{font-family:'Fraunces',serif;font-weight:400;font-style:italic;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.35;max-width:22ch;margin:0 auto 1.6rem;}
+  .philosophy cite{font-family:'Plus Jakarta Sans',sans-serif;font-style:normal;font-size:0.85rem;opacity:0.65;letter-spacing:0.04em;}
+
+  /* CTA */
+  .final-cta{text-align:center;min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;}
+  .final-cta .section-title{margin:0 auto 0.5rem;}
+  .final-cta p{opacity:0.75;max-width:36ch;margin:0 auto;}
+  .final-cta .btn-primary:hover{background:var(--sage);}
+
+  footer{text-align:center;padding:3rem 1.5rem 3.5rem;font-size:0.82rem;opacity:0.55;}
+  footer .foot-mark{font-weight:600;opacity:1;margin-bottom:0.4rem;font-size:0.95rem;}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease,transform 0.8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
@@ -238,15 +164,44 @@
 <div id="dusk-bg"></div>
 
 <div id="master-glass-viewport">
-  <div id="scroll-glass-balancer" class="glass-balancer">
-    <img class="glass-graphic" src="https://raw.githubusercontent.com/atelierbage/website/main/img/verre.svg" alt="Atelier Båge Signature Glasspiece">
+  <div class="dual-glass-wrapper">
+    
+    <div id="glass-left-balancer" class="glass-balancer glass-left">
+      <svg class="wine-glass-svg" viewBox="0 0 110 270" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 16 Q14 72 13 104 Q11 138 55 155 Q99 138 97 104 Q96 72 92 16 Z" stroke="#3D3530" stroke-width="2.5" fill="rgba(245,239,224,0.15)" stroke-linejoin="round"/>
+        <path d="M28 90 Q26 116 55 128 Q84 116 82 90 Q70 97 55 98 Q40 97 28 90 Z" fill="#C8915F" opacity="0.5"/>
+        <ellipse cx="55" cy="90" rx="27" ry="6.5" fill="#C8915F" opacity="0.35"/>
+        <line x1="55" y1="155" x2="55" y2="228" stroke="#3D3530" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M28 228 Q27 240 55 243 Q83 240 82 228 Z" stroke="#3D3530" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+        <path d="M26 36 Q24 60 23 78" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div id="glass-right-balancer" class="glass-balancer glass-right">
+      <svg class="wine-glass-svg" viewBox="0 0 110 270" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 16 Q14 72 13 104 Q11 138 55 155 Q99 138 97 104 Q96 72 92 16 Z" stroke="#3D3530" stroke-width="2.5" fill="rgba(245,239,224,0.15)" stroke-linejoin="round"/>
+        <path d="M28 90 Q26 116 55 128 Q84 116 82 90 Q70 97 55 98 Q40 97 28 90 Z" fill="#C8915F" opacity="0.5"/>
+        <ellipse cx="55" cy="90" rx="27" ry="6.5" fill="#C8915F" opacity="0.35"/>
+        <line x1="55" y1="155" x2="55" y2="228" stroke="#3D3530" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M28 228 Q27 240 55 243 Q83 240 82 228 Z" stroke="#3D3530" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+        <path d="M26 36 Q24 60 23 78" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div id="scroll-sokl-assembly" class="sokl-assembly">
+      <div class="sokl-stake"></div>
+      <svg class="grass-base" viewBox="0 0 56 22">
+        <path d="M0 22 L6 6 L12 22 L18 2 L24 22 L32 4 L38 22 L46 8 L51 22 L56 12 L56 22 Z"/>
+      </svg>
+    </div>
+
   </div>
-  <div id="scroll-sokl" class="sokl-stake"></div>
 </div>
 
 <nav id="site-nav">
   <div class="nav-mark">
-    <img class="nav-logo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Ny logo round.png" alt="Atelier Båge Logo">
+    <div class="nav-ab" id="nav-ab">ab</div>
+    <span class="nav-name" id="nav-name">atelier båge</span>
   </div>
   <a class="nav-link" href="https://www.instagram.com/atelier.bage/" id="nav-cta" target="_blank" rel="noopener">Instagram</a>
 </nav>
@@ -255,72 +210,72 @@
   <div class="hero-fade-container" id="hero-interactive-content">
     <p class="hero-eyebrow">Hand-finished, Gothenburg</p>
     <h1>A small thing that keeps your evening <em>upright</em>.</h1>
-    <p>SOKL is a portable wine stake — 3D-printed, finished by hand, made to hold a glass steady wherever the grass isn't.</p>
+    <p>SOKL is a portable wine stake — 3D-printed, finished by hand, made to hold glasses steady wherever the grass isn't.</p>
     <div class="hero-actions">
-      <a href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" class="btn-primary" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
-      <a href="https://www.etsy.com/se-en/shop/AtelierBage?ref=shop-header-name&listing_id=4503765469&from_page=listing#about" class="btn-ghost" target="_blank" rel="noopener">Why it exists</a>
+      <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
+      <a href="#story" class="btn-ghost">Why it exists</a>
     </div>
   </div>
 </section>
 
-<section id="story" class="story-viewport-tracker">
-  <div class="story-text-content" id="story-narrative-block">
-    <p class="eyebrow">How it started</p>
-    <h2 class="section-title">A glass tipped over in the grass. That was sort of it.</h2>
-    <p class="section-lede">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. SOKL started as a fix for one evening and became the first thing Atelier Båge makes.</p>
-  </div>
-</section>
+<section id="story">
+  <div class="story-container">
+    <div class="story-visual">
+      <div class="moment-card" id="interaction-card">
+        <div id="status-label">Unstable ground</div>
+      </div>
+    </div>
 
-<section class="section-inner features reveal">
-  <div class="feature">
-    <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="19" stroke="#566B56" stroke-width="2"/><path d="M14 21 L19 27 L29 14" stroke="#566B56" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-    <h3>Stays put</h3>
-    <p>Stakes into grass, sand, or soft ground. Holds the glass at a steady tilt so nothing spills, even on a slope.</p>
+    <div class="story-text-content" id="story-text">
+      <p class="eyebrow">How it started</p>
+      <h2 class="section-title">A glass tipped over in the grass. That was sort of it.</h2>
+      <p class="section-lede">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. SOKL started as a fix for one evening and became the first thing Atelier Båge makes.</p>
+    </div>
   </div>
-  <div class="feature">
-    <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><rect x="8" y="8" width="26" height="26" rx="6" stroke="#A06B3E" stroke-width="2"/><path d="M14 21 H28 M21 14 V28" stroke="#A06B3E" stroke-width="2.2" stroke-linecap="round"/></svg>
-    <h3>Folds to pocket size</h3>
-    <p>Collapses flat for the walk there. No bag too small, no picnic too spontaneous.</p>
-  </div>
-  <div class="feature">
-    <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><path d="M21 6 L34 14 V28 L21 36 L8 28 V14 Z" stroke="#3D3530" stroke-width="2" fill="none"/><circle cx="21" cy="21" r="5" stroke="#3D3530" stroke-width="2"/></svg>
-    <h3>Hand-finished, every one</h3>
-    <p>3D-printed in Gothenburg, then sanded and finished by hand. Small batches — never more than the next one needs to be.</p>
+
+  <div class="section-inner features reveal" style="margin-top:5rem;">
+    <div class="feature">
+      <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="19" stroke="#566B56" stroke-width="2"/><path d="M14 21 L19 27 L29 14" stroke="#566B56" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <h3>Stays put</h3>
+      <p>Stakes into grass, sand, or soft ground. Holds your stems at a steady tilt so nothing spills, even on a slope.</p>
+    </div>
+    <div class="feature">
+      <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><rect x="8" y="8" width="26" height="26" rx="6" stroke="#A06B3E" stroke-width="2"/><path d="M14 21 H28 M21 14 V28" stroke="#A06B3E" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <h3>Folds to pocket size</h3>
+      <p>Collapses flat for the walk there. No bag too small, no picnic too spontaneous.</p>
+    </div>
+    <div class="feature">
+      <svg class="feature-icon" viewBox="0 0 42 42" fill="none"><path d="M21 6 L34 14 V28 L21 36 L8 28 V14 Z" stroke="#3D3530" stroke-width="2" fill="none"/><circle cx="21" cy="21" r="5" stroke="#3D3530" stroke-width="2"/></svg>
+      <h3>Hand-finished, every one</h3>
+      <p>3D-printed in Gothenburg, then sanded and finished by hand. Small batches — never more than the next one needs to be.</p>
+    </div>
   </div>
 </section>
 
 <section class="colours">
   <div class="section-inner">
-    <p class="eyebrow" style="margin:0 auto 1rem; display:block;">Five colours</p>
+    <p class="eyebrow" style="margin:0 auto 1rem;display:block;">Five colours</p>
     <h2 class="section-title" style="margin:0 auto 0;">Pick the one that's already in your head.</h2>
-     
     <div class="colour-row reveal">
       <div class="colour-chip active" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png">
-        <div class="swatch" style="background:#7A8C7A;"></div>
-        <span>Sage green</span>
+        <div class="swatch" style="background:#7A8C7A;"></div><span>Sage green</span>
       </div>
       <div class="colour-chip" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Terracotta.png">
-        <div class="swatch" style="background:#C8915F;"></div>
-        <span>Terracotta</span>
+        <div class="swatch" style="background:#C8915F;"></div><span>Terracotta</span>
       </div>
       <div class="colour-chip" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Beige.png">
-        <div class="swatch" style="background:#D8C7A8;"></div>
-        <span>Beige / tan</span>
+        <div class="swatch" style="background:#D8C7A8;"></div><span>Beige / tan</span>
       </div>
       <div class="colour-chip" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Blue.png">
-        <div class="swatch" style="background:#9DBFCB;"></div>
-        <span>Sky blue</span>
+        <div class="swatch" style="background:#9DBFCB;"></div><span>Sky blue</span>
       </div>
       <div class="colour-chip" data-img="https://raw.githubusercontent.com/atelierbage/website/main/img/Yellow.png">
-        <div class="swatch" style="background:#E0B84A;"></div>
-        <span>Yellow</span>
+        <div class="swatch" style="background:#E0B84A;"></div><span>Yellow</span>
       </div>
     </div>
-
     <div class="hero-image-container reveal">
-      <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="SOKL portable wine stake">
+      <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="SOKL portable wine stake in sage green">
     </div>
-
   </div>
 </section>
 
@@ -335,7 +290,7 @@
   <p class="hero-eyebrow" style="opacity:0.7;">Ready when you are</p>
   <h2 class="section-title reveal">An evening that doesn't spill.</h2>
   <p class="reveal">SOKL — 250 SEK. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
-  <a href="https://www.etsy.com/se-en/listing/4503765469/tenu-the-portable-wine-stake-made-in?ref=shop_home_feat_1&sr_prefetch=1&pf_from=shop_home&logging_key=b9eb141e1206a241414e0873e6922c2370d561f1%3A4503765469&variation0=6727427977" class="btn-primary reveal" target="_blank" rel="noopener">Shop on Etsy</a>
+  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary reveal" target="_blank" rel="noopener">Shop on Etsy</a>
 </section>
 
 <footer>
@@ -344,174 +299,137 @@
 </footer>
 
 <script>
-  const duskBg = document.getElementById('dusk-bg');
-  const navLogo = document.querySelector('.nav-logo'); 
-  const navLink = document.getElementById('nav-cta');
-  const heroGhostBtn = document.querySelector('.hero .btn-ghost');
-
-  // Interactive Target Handles
-  const heroFadeContainer = document.getElementById('hero-interactive-content');
-  const scrollGlassBalancer = document.getElementById('scroll-glass-balancer');
-  const scrollSokl = document.getElementById('scroll-sokl');
-  const storyNarrativeBlock = document.getElementById('story-narrative-block');
-  const storySection = document.getElementById('story');
-
-  const stops = [
-    {p:0,    c:'#F5EFE0'},
-    {p:0.3,  c:'#E4D4BC'},
-    {p:0.6,  c:'#9C8267'},
-    {p:0.85, c:'#5A4438'},
-    {p:1,    c:'#2A2220'}
-  ];
-
-  function hexToRgb(hex){
-    const v = hex.replace('#','');
-    return [parseInt(v.substring(0,2),16), parseInt(v.substring(2,4),16), parseInt(v.substring(4,6),16)];
-  }
-  function lerp(a,b,t){ return a + (b-a)*t; }
+  const duskBg    = document.getElementById('dusk-bg');
+  const navAb      = document.getElementById('nav-ab');
+  const navName   = document.getElementById('nav-name');
+  const navCta    = document.getElementById('nav-cta');
+  const heroFade  = document.getElementById('hero-interactive-content');
+  const masterVP  = document.getElementById('master-glass-viewport');
   
+  // Left & Right Balancer Reference Handles
+  const glassLeftBalancer  = document.getElementById('glass-left-balancer');
+  const glassRightBalancer = document.getElementById('glass-right-balancer');
+  const soklAssembly       = document.getElementById('scroll-sokl-assembly');
+  
+  const statusLbl = document.getElementById('status-label');
+  const card      = document.getElementById('interaction-card');
+  const storyText = document.getElementById('story-text');
+
+  const stops=[
+    {p:0,   c:'#F5EFE0'},{p:0.3,c:'#E4D4BC'},
+    {p:0.6, c:'#9C8267'},{p:0.85,c:'#5A4438'},{p:1,c:'#2A2220'}
+  ];
+  const hex2rgb=h=>{const v=h.replace('#','');return[parseInt(v.slice(0,2),16),parseInt(v.slice(2,4),16),parseInt(v.slice(4,6),16)];};
+  const lerp=(a,b,t)=>a+(b-a)*t;
   function colorAt(p){
     for(let i=0;i<stops.length-1;i++){
-      if(p >= stops[i].p && p <= stops[i+1].p){
-        const localT = (p - stops[i].p) / (stops[i+1].p - stops[i].p);
-        const c1 = hexToRgb(stops[i].c);
-        const c2 = hexToRgb(stops[i+1].c);
-        const r = Math.round(lerp(c1[0], c2[0], localT));
-        const g = Math.round(lerp(c1[1], c2[1], localT));
-        const b = Math.round(lerp(c1[2], c2[2], localT));
-        return `rgb(${r},${g},${b})`;
+      if(p>=stops[i].p&&p<=stops[i+1].p){
+        const t=(p-stops[i].p)/(stops[i+1].p-stops[i].p);
+        const [r1,g1,b1]=hex2rgb(stops[i].c),[r2,g2,b2]=hex2rgb(stops[i+1].c);
+        return`rgb(${Math.round(lerp(r1,r2,t))},${Math.round(lerp(g1,g2,t))},${Math.round(lerp(b1,b2,t))})`;
       }
     }
-    return stops[stops.length-1].c;
+    return stops.at(-1).c;
   }
-  
-  function luminance(rgbStr){
-    const m = rgbStr.match(/\d+/g).map(Number);
-    return (0.299*m[0] + 0.587*m[1] + 0.114*m[2]) / 255;
-  }
+  const lum=rgb=>{ const m=rgb.match(/\d+/g).map(Number); return(0.299*m[0]+0.587*m[1]+0.114*m[2])/255; };
 
   function onScroll(){
-    const sY = window.scrollY;
-    const vH = window.innerHeight;
-    const max = document.documentElement.scrollHeight - vH;
-    const p = max <= 0 ? 0 : Math.min(1, Math.max(0, sY / max));
-    
-    // Background handling
-    const c = colorAt(p);
-    duskBg.style.background = c;
+    const sY=window.scrollY, vH=window.innerHeight;
+    const max=document.documentElement.scrollHeight-vH;
+    const p=max<=0?0:Math.min(1,Math.max(0,sY/max));
 
-    const isDark = luminance(c) < 0.5;
-    const lightColor = '#F5EFE0';
-    const darkColor = '#3D3530';
-    
-    document.body.style.color = isDark ? lightColor : darkColor;
-    navLink.style.color = isDark ? lightColor : darkColor;
-    navLink.style.borderColor = isDark ? lightColor : darkColor;
+    // Dusk background
+    const col=colorAt(p);
+    duskBg.style.background=col;
+    const dark=lum(col)<0.5;
+    const L='#F5EFE0',D='#3D3530';
+    document.body.style.color=dark?L:D;
+    [navCta,navName].forEach(el=>{el.style.color=dark?L:D;});
+    navCta.style.borderColor=dark?L:D;
+    navAb.style.background=dark?L:D;
+    navAb.style.color=dark?D:L;
 
-    if (navLogo) { navLogo.style.filter = isDark ? 'invert(1) brightness(1.5)' : 'none'; }
-    if (heroGhostBtn) {
-      heroGhostBtn.style.color = isDark ? lightColor : darkColor;
-      heroGhostBtn.style.borderColor = isDark ? lightColor : darkColor;
+    // Hero fade
+    const fp=Math.min(1,sY/(vH*0.35));
+    heroFade.style.opacity=1-fp;
+    heroFade.style.transform=`translateY(${-fp*25}px)`;
+
+    // Interactive Timeline Alignment Checks
+    const cr=card.getBoundingClientRect();
+    const cardCY=cr.top+cr.height/2;
+    const vpCY=vH/2;
+    const inView=cr.bottom>0&&cr.top<vH;
+
+    // Layering priority check when container card passes over viewport centre
+    masterVP.style.zIndex=(cr.top<vpCY&&cr.bottom>vpCY)?'6':'-1';
+
+    // BROADENED TIMELINE INTERVAL: Starts swinging earlier!
+    // Triggers from the top entrance boundaries down to leaving depth rules
+    const entryBound = vH * 0.85; 
+    const exitBound = vH * 0.15;
+    const totalDist = entryBound - exitBound;
+    const animP = inView 
+      ? Math.min(1, Math.max(0, (entryBound - cr.top) / totalDist))
+      : (cr.top > vH ? 0 : 1);
+
+    let leftAngle=0, rightAngle=0, assemblyY=140, label='Unstable ground';
+
+    if(animP < 0.45){
+      // Stage 1: Glasses swing outward early, expanding tips dangerously on soft soil.
+      const t = animP / 0.45;
+      leftAngle = lerp(0, -16, t);
+      rightAngle = lerp(0, 16, t);
+      assemblyY = 140; // SOKL planted firmly out of reach in the bottom grass zone
+      label = 'Unstable ground';
+    } else if(animP < 0.80){
+      // Stage 2: SOKL glides straight up out of the grass layer, aligning and pinning both items secure!
+      const t = (animP - 0.45) / 0.35;
+      leftAngle = lerp(-16, 0, t);
+      rightAngle = lerp(16, 0, t);
+      assemblyY = lerp(140, 0, t);
+      label = 'Saved by SOKL';
+    } else {
+      // Stage 3: Secure lock achieved and held steady.
+      leftAngle = 0;
+      rightAngle = 0;
+      assemblyY = 0;
+      label = 'Saved by SOKL';
     }
 
-    // Hero headline content fades out cleanly over the initial scroll zone
-    const fadeLimit = vH * 0.45;
-    const fadeProgress = Math.min(1, sY / fadeLimit);
-    heroFadeContainer.style.opacity = 1 - fadeProgress;
-    heroFadeContainer.style.transform = `translateY(${-fadeProgress * 30}px)`;
+    if (glassLeftBalancer) glassLeftBalancer.style.transform = `rotate(${leftAngle}deg)`;
+    if (glassRightBalancer) glassRightBalancer.style.transform = `rotate(${rightAngle}deg)`;
+    if (soklAssembly) soklAssembly.style.transform = `translateX(-50%) translateY(${assemblyY}px)`;
+    if (statusLbl) statusLbl.textContent = label;
 
-    // Interactive Core Scroll Lifecycle Timeline Analysis
-    if (storySection) {
-      const storyRect = storySection.getBoundingClientRect();
-      
-      // Compute progress index specifically mapped to the active execution window
-      let trackProgress = (sY - (sY + storyRect.top - vH)) / (storyRect.height + vH);
-      trackProgress = Math.min(1, Math.max(0, trackProgress));
-
-      let glassAngle = 0;
-      let stakeY = 160;
-      let stakeOpacity = 0;
-      let textOpacity = 0;
-      let textTranslateY = 30;
-
-      if (trackProgress <= 0.40) {
-        // Phase 1: Interactive organic swinging right to left on scroll descent
-        const waveT = trackProgress / 0.40;
-        // Uses a mathematical sine wave loop to smoothly lean left and right
-        glassAngle = Math.sin(waveT * Math.PI * 2) * 12; 
-        stakeY = 160;
-        stakeOpacity = 0;
-        textOpacity = 0;
-        textTranslateY = 30;
-      } 
-      else if (trackProgress > 0.40 && trackProgress <= 0.70) {
-        // Phase 2: SOKL shoots up and intercepts the moving stem, locking it perfectly straight
-        const stabilizeT = (trackProgress - 0.40) / 0.30;
-        
-        // Grab whatever angle the glass had at the end of phase 1 and pull it to 0
-        const entryAngle = Math.sin(0.40 * Math.PI * 2) * 12;
-        glassAngle = lerp(entryAngle, 0, stabilizeT);
-        
-        // Stake moves cleanly straight up into posture position
-        stakeY = lerp(160, 0, stabilizeT);
-        stakeOpacity = lerp(0, 1, stabilizeT);
-        textOpacity = 0;
-        textTranslateY = 30;
-      } 
-      else {
-        // Phase 3: SOKL is completely locked. The historical story section text fades in underneath.
-        const textFadeT = (trackProgress - 0.70) / 0.30;
-        glassAngle = 0;
-        stakeY = 0;
-        stakeOpacity = 1;
-        
-        textOpacity = lerp(0, 1, textFadeT);
-        textTranslateY = lerp(30, 0, textFadeT);
-      }
-
-      // Commit styling properties directly to node layouts
-      scrollGlassBalancer.style.transform = `rotate(${glassAngle}deg)`;
-      scrollSokl.style.transform = `translate(-50%, ${stakeY}px)`;
-      scrollSokl.style.opacity = stakeOpacity;
-      
-      if (storyNarrativeBlock) {
-        storyNarrativeBlock.style.opacity = textOpacity;
-        storyNarrativeBlock.style.transform = `translateY(${textTranslateY}px)`;
-      }
-    }
+    // Text details fade entry rules triggered when secure assembly state completes
+    storyText.classList.toggle('visible', animP>=0.75 && inView);
   }
-  
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
+
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
   onScroll();
 
-  // Standard visibility viewport intersections
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in'); }
-    });
-  }, {threshold:0.15});
-  revealEls.forEach(el=>io.observe(el));
+  // Scroll reveal loader instance setup
+  new IntersectionObserver(
+    entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),
+    {threshold:0.15}
+  ).observe=( ()=>{
+    const io=new IntersectionObserver(
+      entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),
+      {threshold:0.15}
+    );
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  })();
 
-  // Dynamic Product Photo Management
-  const productPhoto = document.getElementById('product-photo');
+  // Multi-colour view selection triggers
+  const photo=document.getElementById('product-photo');
   document.querySelectorAll('.colour-chip').forEach(chip=>{
-    chip.addEventListener('click', ()=>{
+    chip.addEventListener('click',()=>{
       document.querySelectorAll('.colour-chip').forEach(c=>c.classList.remove('active'));
       chip.classList.add('active');
-      
-      const newImgSrc = chip.getAttribute('data-img');
-      if(productPhoto) {
-        productPhoto.style.opacity = 0;
-        setTimeout(() => {
-          productPhoto.src = newImgSrc;
-          productPhoto.style.opacity = 1;
-        }, 300);
-      }
+      if(photo){ photo.style.opacity=0; setTimeout(()=>{photo.src=chip.dataset.img;photo.style.opacity=1;},300); }
     });
   });
 </script>
-
 </body>
 </html>
