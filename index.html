@@ -20,47 +20,46 @@
 
   #dusk-bg{position:fixed;inset:0;z-index:-2;background:var(--linen);}
 
-  /* RESPONSIVE BRANDING HEADLINE LOGO NAVIGATION */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;padding:2rem clamp(1.5rem,5vw,4rem);pointer-events:none;}
-  .nav-mark{display:flex;align-items:center;width:300px;height:80px;color:var(--bark);transition:color 0.3s ease, transform 0.2s ease;pointer-events:auto;}
+  /* TOP ACTION BAR — STAYS COMPLETELY STATIC ON THE TOP RIGHT EVERYWHERE */
+  .fixed-header-actions {
+    position:fixed;top:2rem;right:clamp(1.5rem,5vw,4rem);
+    z-index:110;display:flex;align-items:center;
+  }
+
+  /* BRANDING NAV — UNCONDITIONALLY POSITIONED ON THE FAR TOP LEFT */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:flex-start;padding:2rem clamp(1.5rem,5vw,4rem);pointer-events:none;}
+  .nav-mark{display:flex;align-items:center;width:280px;height:70px;color:var(--bark);transition:color 0.3s ease, transform 0.2s ease;pointer-events:auto;}
   .nav-mark:hover{transform:scale(1.02);color:var(--sage-deep);}
   .nav-mark svg{width:100%;height:100%;}
   .nav-mark svg path, .nav-mark svg text, .nav-mark svg tspan { transition: fill 0.3s ease; }
 
-  @media(min-width:769px) { nav{justify-content:flex-start;} }
-  @media(max-width:768px) { nav{justify-content:center;} .nav-mark{width:260px;height:70px;} }
-
-  /* HOOKED PERSISTENT FIXED TOP CTA LINE HEADER CONTAINER */
-  .sticky-action-bar {
-    position:fixed;top:2.5rem;left:50%;transform:translateX(-50%);
-    z-index:95;display:flex;justify-content:center;
-    pointer-events:auto;opacity:0;visibility:hidden;
-    transition:opacity 0.2s ease, visibility 0.2s ease;
+  @media(max-width:768px) {
+    .nav-mark { width:210px; height:55px; }
+    .fixed-header-actions { top:1.8rem; right:1.2rem; }
+    .btn-primary.header-btn { padding:0.75rem 1.4rem; font-size:0.85rem; }
   }
-  .sticky-action-bar.visible { opacity:1; visibility:visible; }
 
-  /* MASTER TIMELINE SCROLL CONSTANTS MODULE */
-  .scroll-container { position:relative; min-height:220vh; }
+  /* TIMELINE TIMING COMPRESSION STAGE STACKS */
+  .scroll-container { position:relative; min-height:165vh; }
 
-  /* STABLE GEOMETRY VISUALIZATION STAGE CONTAINER */
+  /* PORTABLE BALANCED GLASSES VIEWPORT SPACE */
   .master-stage-viewport {
-    position:fixed;top:48%;left:50%;transform:translate(-50%, -50%);
+    position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);
     width:220px;height:240px;
     pointer-events:none;z-index:5;
     display:flex;justify-content:center;align-items:flex-end;
   }
   .dual-glass-wrapper { width:100%; height:100%; position:relative; display:flex; justify-content:center; align-items:flex-end; }
 
-  /* Scaled Vessel Systems */
   .glass-balancer{ position:absolute; bottom:25px; width:50%; height:80%; display:flex; justify-content:center; align-items:flex-end; }
   .glass-left { left:0; transform-origin: bottom right; }
   .glass-right { right:0; transform-origin: bottom left; }
   .wine-glass-svg { width:100%; height:100%; overflow:visible; }
 
-  /* SOKL Assembly Container - Now Visible Initially from underneath */
+  /* SOKL Assembly Container — Hidden below screen bounds on page landing */
   .sokl-assembly{
     position:absolute;bottom:20px;left:50%;
-    transform:translateX(-50%) translateY(140px);
+    transform:translateX(-50%) translateY(280px);
     width:70px;height:120px;z-index:10;
     display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
   }
@@ -68,50 +67,49 @@
   .sokl-stake::before{ content:''; position:absolute; top:8px; left:-15px; width:40px; height:9px; background:var(--terracotta-deep); border-radius:4px; }
   .grass-base { width:52px; height:22px; fill:var(--grass-green); margin-top:-2px; }
 
-  /* SEQUENTIAL INTERACTIVE SCROLL TRACK PANELS */
+  /* UNIFIED KINETIC SCROLL TRIGGERS */
   .sequence-trigger-frame {
     position:relative; width:100%; min-height:100vh;
     display:flex; flex-direction:column; align-items:center;
   }
 
-  /* Title Layout Block Always Stacked Perfectly on Top Center */
+  /* Headline Element shifted vertically upwards closer to nav alignment rules */
   .hero-headline-wrapper {
-    width:100%; max-width:850px; text-align:center; padding-top:max(12rem, 22vh);
+    width:100%; max-width:850px; text-align:center; padding-top:max(8.5rem, 16vh);
     position:relative; z-index:12; will-change: transform, opacity;
   }
-  .hero-headline-wrapper h1 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2.3rem,6vw,4.5rem); line-height:1.1; letter-spacing:-0.01em; max-width:18ch; margin:0 auto; }
+  .hero-headline-wrapper h1 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2.3rem,5.8vw,4.2rem); line-height:1.1; letter-spacing:-0.01em; max-width:18ch; margin:0 auto; }
   .hero-headline-wrapper h1 em { font-style:italic; font-weight:500; color:var(--sage-deep); }
 
-  /* Unified Bottom Block Group containing standard description text paragraph and main action link button together */
+  /* Monolithic description container block alignment layout specs */
   .hero-unified-footer-block {
-    position:fixed; bottom:8vh; left:50%; transform:translateX(-50%);
-    width:100%; max-width:550px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2rem;
-    z-index:12; will-change: transform, opacity;
+    position:fixed; bottom:10vh; left:50%; transform:translateX(-50%);
+    width:100%; max-width:550px; text-align:center; display:flex; flex-direction:column; align-items:center;
+    z-index:12; will-change: transform, opacity; padding:0 1.5rem;
   }
   .hero-unified-footer-block p { font-size:clamp(1rem,1.5vw,1.15rem); color:var(--bark-soft); max-width:44ch; font-weight:400; margin:0 auto; line-height:1.6; }
-  .hero-actions-container { display:flex; justify-content:center; width:100%; height:50px; position:relative; }
 
-  /* Sequence 2 Revelation Message Placement Layer */
+  /* RESTRUCTURED CHRONOLOGY LAYER: ORIGIN + HOOKED REVELATION TEXT */
   .sokl-revelation-block {
-    position:fixed; top:72%; left:50%; transform:translate(-50%, -50%);
-    width:100%; max-width:700px; text-align:center; z-index:4;
+    position:fixed; top:54%; left:50%; transform:translate(-50%, -50%);
+    width:100%; max-width:750px; text-align:center; z-index:4;
     opacity:0; visibility:hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
-    padding:0 1.5rem;
+    padding:0 1.5rem; display:flex; flex-direction:column; align-items:center;
   }
   .sokl-revelation-block.visible { opacity:1; visibility:visible; }
-  .sokl-revelation-block h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(1.8rem,4vw,2.8rem); line-height:1.25; color:var(--bark); max-width:24ch; margin:0 auto; }
+  .sokl-revelation-block h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(1.8rem,3.8vw,2.6rem); line-height:1.25; color:var(--bark); max-width:26ch; margin:0.8rem auto 0; }
 
-  /* SIMPLE UNLOCKED STATIC CONTENT MODULES DOWN PAGE */
-  section.standard-content { position:relative; padding:clamp(5rem,12vw,9rem) clamp(1.5rem,6vw,6rem); background:var(--linen); z-index:30; }
-  .section-inner{ max-width:1140px; margin:0 auto; }
+  /* COMPLETELY STATIC LAYOUT STRUCTURAL FLOW LOWER SECTIONS */
+  section.standard-content { position:relative; padding:clamp(4rem,10vw,8rem) clamp(1.5rem,6vw,6rem); background:var(--linen); z-index:30; }
+  .section-inner{ max-width:1140px; margin:0 auto; text-align:center; }
   .eyebrow{ font-size:0.76rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:500; margin-bottom:1rem; opacity:0.65; }
   .section-title{ font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2rem,4.5vw,3.1rem); line-height:1.15; margin-bottom:1.4rem; }
-  .section-lede{ font-size:1.05rem; opacity:0.85; max-width:700px; }
+  .section-lede{ font-size:1.1rem; opacity:0.85; max-width:720px; margin:0 auto; line-height:1.75; }
 
   .btn-primary{ background:var(--bark); color:var(--linen); padding:0.95rem 2.1rem; border-radius:100px; font-weight:600; font-size:0.95rem; transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease; display:inline-block; white-space:nowrap; border:none; cursor:pointer;}
   .btn-primary:hover{ background:var(--sage-deep); transform:translateY(-2px); }
 
-  .features{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; margin-top:4rem; }
+  .features{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; margin-top:5rem; text-align:left; }
   @media(max-width:860px){ .features{ grid-template-columns:1fr; gap:2rem; } }
   .feature{ border-top:1.5px solid currentColor; padding-top:1.5rem; opacity:0.92; }
   .feature-icon{ width:42px; height:42px; margin-bottom:1.2rem; }
@@ -132,11 +130,11 @@
   .philosophy blockquote{ font-family:'Fraunces',serif; font-weight:400; font-style:italic; font-size:clamp(1.6rem,4vw,2.6rem); line-height:1.35; max-width:22ch; margin:0 auto 1.6rem; }
   .philosophy cite{ font-family:'Plus Jakarta Sans',sans-serif; font-style:normal; font-size:0.85rem; opacity:0.65; letter-spacing:0.04em; }
 
-  .final-cta{ text-align:center; min-height:80vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.8rem; }
+  .final-cta{ text-align:center; min-height:65vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.8rem; }
   footer{ text-align:center; padding:3rem 1.5rem 3.5rem; font-size:0.82rem; opacity:0.55; background:var(--linen); position:relative; z-index:30;}
   footer .foot-mark{ font-weight:600; opacity:1; margin-bottom:0.4rem; font-size:0.95rem; }
 
-  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.8s ease, transform 0.8s ease; }
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity(0.8s) ease, transform 0.8s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
 </style>
 </head>
@@ -144,8 +142,8 @@
 
 <div id="dusk-bg"></div>
 
-<div id="top-action-bar" class="sticky-action-bar">
-  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
+<div class="fixed-header-actions">
+  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary header-btn" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
 </div>
 
 <nav id="site-nav">
@@ -158,7 +156,7 @@
                     <text x="315.299px" y="728.197px" style="font-family:'Plus Jakarta Sans', sans-serif;font-weight:600;font-size:371.659px;fill:currentColor;">a<tspan x="524.171px 660.942px " y="728.197px 728.197px ">te</tspan>lier båge</text>
                 </g>
                 <g transform="matrix(0.848532,0,0,2.274212,1470.081593,-752.715865)">
-                    <path d="M474.288,693.381C470.228,700.908 464.665,707.589 457.598,713.424C450.32,719.432 441.895,724.14 432.325,727.547C422.755,730.954 412.24,732.657 400.781,732.657C387.649,732.657 376.034,730.257 365.938,725.456C355.841,720.655 347.943,713.997 342.244,705.479C336.545,696.962 333.696,687.098 333.696,675.886C333.696,665.232 336.019,655.6 340.665,646.99C345.31,638.379 352.511,631.101 362.267,625.155C372.023,619.208 384.397,614.996 399.387,612.518L467.493,601.238L467.493,592.17C467.493,581.33 463.483,572.472 455.461,565.596C447.439,558.721 436.924,555.283 423.916,555.283C412.333,555.283 402.159,558.24 393.394,564.156C384.629,570.072 378.14,577.768 373.928,587.245L343.824,571.636C347.602,562.468 353.595,554.261 361.803,547.013C370.01,539.766 379.534,534.052 390.374,529.87C401.214,525.689 412.612,523.599 424.567,523.599C439.805,523.599 453.293,526.51 465.031,532.333C468.32,533.964 471.405,535.77 474.288,537.752L474.288,446.851L509.131,446.851L509.131,554.871C515.953,546.407 524.346,539.467 534.311,534.052C547.133,527.083 561.814,523.599 578.352,523.599C597.307,523.599 614.264,528.167 629.223,537.304C644.183,546.44 656.014,558.86 664.717,574.562C673.42,590.265 677.771,608.12 677.771,628.128C677.771,647.888 673.435,665.681 664.763,681.507C656.091,697.334 644.275,709.815 629.316,718.952C614.357,728.089 597.338,732.657 578.26,732.657C561.968,732.657 547.195,729.095 533.939,721.972C523.372,716.293 514.793,708.666 508.202,699.091L508.202,728.197L474.288,728.197L474.288,693.381ZM467.493,630.434L406.913,640.671C394.153,642.901 384.877,646.974 379.085,652.89C373.293,658.805 370.397,666.037 370.397,674.585C370.397,682.824 373.634,689.699 380.107,695.212C386.58,700.725 394.865,703.482 404.962,703.482C417.474,703.482 428.407,700.803 437.761,695.445C447.114,690.087 454.408,682.839 459.642,673.703C464.876,664.566 467.493,554.423 467.493,643.273L467.493,630.434ZM575.472,699.208C588.108,699.208 599.367,696.11 609.247,689.916C619.127,683.722 626.9,675.251 632.568,664.504C638.236,653.757 641.07,641.631 641.07,628.128C641.07,614.438 638.236,602.282 632.568,591.659C626.9,581.036 619.127,572.611 609.247,566.386C599.367,560.161 588.108,557.048 575.472,557.048C562.96,557.048 551.686,560.145 541.651,566.34C531.616,572.534 523.688,581.005 517.865,591.752C512.042,602.499 509.131,614.624 509.131,628.128C509.131,641.631 512.042,653.757 517.865,664.504C523.688,675.251 531.616,683.722 541.651,689.916C551.686,696.11 562.96,699.208 575.472,699.208Z" style="fill:currentColor;"/>
+                    <path d="M474.288,693.381C470.228,700.908 464.665,707.589 457.598,713.424C450.32,719.432 441.895,724.14 432.325,727.547C422.755,730.954 412.24,732.657 400.781,732.657C387.649,732.657 376.034,730.257 365.938,725.456C355.841,720.655 347.943,713.997 342.244,705.479C336.545,696.962 333.696,687.098 333.696,675.886C333.696,665.232 336.019,655.6 340.665,646.99C345.31,638.379 352.511,631.101 362.267,625.155C372.023,619.208 384.397,614.996 399.387,612.518L467.493,601.238L467.493,592.17C467.493,581.33 463.483,572.472 455.461,565.596C447.439,558.721 436.924,555.283 423.916,555.283C412.333,555.283 402.159,558.24 393.394,564.156C384.629,570.072 378.14,577.768 373.928,587.245L343.824,571.636C347.602,562.468 353.595,554.261 361.803,547.013C370.01,539.766 379.534,534.052 390.374,529.87C401.214,525.689 412.612,523.599 424.567,523.599C439.805,523.599 453.293,526.51 465.031,532.333C468.32,533.964 471.405,535.77 474.288,537.752L474.288,446.851L509.131,446.851L509.131,554.871C515.953,546.407 524.346,539.467 534.311,534.052C547.133,527.083 561.814,523.599 578.352,523.599C597.307,523.599 614.264,528.167 629.223,537.304C644.183,546.44 656.014,558.86 664.717,574.562C673.42,590.265 677.771,608.12 677.771,628.128C677.771,647.888 673.435,665.681 664.763,681.507C656.091,697.334 644.275,709.815 629.316,718.952C614.357,728.089 597.338,732.657 578.26,732.657C561.968,732.657 547.195,729.095 533.939,721.972C523.372,716.293 514.793,708.666 508.202,699.091L508.202,728.197L474.288,728.197L474.288,693.381ZM467.493,630.434L406.913,640.671C394.153,642.901 384.877,646.974 379.085,652.89C373.293,658.805 370.397,666.037 370.397,674.585C370.397,682.824 373.634,689.699 380.107,695.212C386.58,700.725 394.865,703.482 404.962,703.482C417.474,703.482 428.407,700.803 437.761,695.445C447.114,690.087 454.408,682.839 459.642,673.703C464.876,664.566 467.493,554.423 467.493,643.273L467.493,630.434ZM575.472,699.208C588.108,699.208 599.367,696.11 609.247,689.916C619.127,683.722 626.9,675.251 632.568,664.504C638.236,653.757 641.07,641.631 641.07,628.128C641.07,614.438 638.236,602.282 632.568,591.659C626.9,581.036 619.127,572.611 609.247,566.386C599.367,560.161 588.108,557.048 575.472,557.048C562.96,557.048 551.686,560.145 541.651,566.34C531.616,572.534 523.688,581.005 517.865,591.752C512.042,602.499 509.131,614.624 509.131,628.128C509.131,641.631 512.042,553.757 517.865,664.504C523.688,675.251 531.616,683.722 541.651,689.916C551.686,696.11 562.96,699.208 575.472,699.208Z" style="fill:currentColor;"/>
                 </g>
             </g>
         </g>
@@ -211,26 +209,22 @@
 
     <div class="hero-unified-footer-block" id="hero-footer-block">
       <p>SOKL is a portable wine stake — 3D-printed, finished by hand, made to hold glasses steady wherever the grass isn't.</p>
-      
-      <div class="hero-actions-container" id="inline-action-wrapper">
-        <a id="interactive-cta-btn" href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
-      </div>
     </div>
 
   </div>
 
   <div class="sequence-trigger-frame" id="static-revelation-trigger">
     <div class="sokl-revelation-block" id="sokl-revelation-text">
+      <p class="eyebrow" style="margin-bottom: 0.5rem;">The Origin</p>
       <h2>A glass tipped over in the grass. That was sort of it.</h2>
     </div>
   </div>
 
 </div>
 
-<section class="standard-content" id="more-story" style="padding-top:10rem;">
+<section class="standard-content" id="more-story" style="padding-top:2rem;">
   <div class="section-inner">
-    <p class="eyebrow">The Origin</p>
-    <p class="section-lede" style="font-size:1.25rem; line-height:1.7; color:var(--bark-soft);">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. SOKL started as a fix for one evening and became the first thing Atelier Båge makes.</p>
+    <p class="section-lede" style="color:var(--bark-soft);">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. SOKL started as a fix for one evening and became the first thing Atelier Båge makes.</p>
   </div>
 
   <div class="section-inner features reveal">
@@ -302,10 +296,8 @@
   const duskBg           = document.getElementById('dusk-bg');
   const brandingLogo     = document.getElementById('branding-logo');
   
-  const topActionBar     = document.getElementById('top-action-bar');
   const heroHeadingBlock = document.getElementById('hero-heading-block');
   const heroFooterBlock  = document.getElementById('hero-footer-block');
-  const interactiveCta   = document.getElementById('interactive-cta-btn');
   const revelationText   = document.getElementById('sokl-revelation-text');
   
   const glassLeft        = document.getElementById('glass-left-balancer');
@@ -335,7 +327,7 @@
     const sY = window.scrollY;
     const vH = window.innerHeight;
     
-    // Ambient landscape backdrop interpolator parameters
+    // Smooth dynamic landscape ambient color interpolator
     const maxScroll = document.documentElement.scrollHeight - vH;
     const scrollP = maxScroll <= 0 ? 0 : Math.min(1, Math.max(0, sY / maxScroll));
     const col = colorAt(scrollP);
@@ -345,90 +337,79 @@
     document.body.style.color = dark ? L : D;
     if (brandingLogo) brandingLogo.style.color = dark ? L : D;
 
-    // SCROLL STEP SEGMENTS
-    const stage1End = vH * 0.70; // Sequence 1 Finishes (Top text disappears, swinging peaks)
-    const stage2End = vH * 1.35; // Sequence 2 Finishes (SOKL locks, Button anchors perfectly, static website state locks)
+    // COMPRESSED SCROLL CONFIGURATION BREAKPOINTS FOR MAXIMUM RESPONSIVENESS
+    const stage1End = vH * 0.45; // Fast dismissal transition boundary segment
+    const stage2End = vH * 0.90; // SOKL completely docks home right below dismissed frame text
 
     if (sY < stage2End) {
-      // RESET COMPONENT FIXED TRANSLATION FOR INTERACTIVE SEQUENCES
+      // KEEP ASSETS MOUNTED INTERACTIVELY WITHIN ACTIVE SEQUENCE RUNS
       masterStage.style.position = 'fixed';
-      masterStage.style.top = '48%';
+      masterStage.style.top = '50%';
       masterStage.style.transform = 'translate(-50%, -50%)';
       masterStage.style.opacity = '1';
       
       revelationText.style.position = 'fixed';
-      revelationText.style.top = '72%';
+      revelationText.style.top = '54%';
       revelationText.style.transform = 'translate(-50%, -50%)';
 
       if (sY <= stage1End) {
-        // TIMELINE SEQUENCE 1: Text slides and fades, glasses swing out, SOKL begins rising visibly
+        // SEGMENT 1: Dynamic dismissals, swinging elements drift outward, SOKL starts moving up from deep below
         const t1 = Math.min(1, Math.max(0, sY / stage1End));
 
-        // Heading component slides away linearly
+        // Text disappears cleanly in parallel
         heroHeadingBlock.style.opacity = 1 - t1;
-        heroHeadingBlock.style.transform = `translateY(${-t1 * 60}px)`;
+        heroHeadingBlock.style.transform = `translateY(${-t1 * 50}px)`;
 
-        // Unified footer blocks move perfectly as one matching cluster configuration
         heroFooterBlock.style.opacity = 1 - t1;
-        heroFooterBlock.style.transform = `translate3d(-50%, ${-t1 * 50}px, 0)`;
-        
-        // Button visibility rules prevent double render blips
-        interactiveCta.style.visibility = 'visible';
-        topActionBar.classList.remove('visible');
+        heroFooterBlock.style.transform = `translate3d(-50%, ${-t1 * 40}px, 0)`;
 
-        // Tilting animation states
+        // Angular tilt movements
         const swingLeft = lerp(0, -14, t1);
         const swingRight = lerp(0, 14, t1);
         glassLeft.style.transform = `rotate(${swingLeft}deg)`;
         glassRight.style.transform = `rotate(${swingRight}deg)`;
 
-        // SOKL crawls visibly from its initially visible lower stage boundaries
-        const climbY = lerp(140, 60, t1);
+        // SOKL arrives onto the scene dynamically from completely hidden boundary locations
+        const climbY = lerp(280, 120, t1);
         soklAssembly.style.transform = `translateX(-50%) translateY(${climbY}px)`;
         
         revelationText.classList.remove('visible');
 
       } else {
-        // TIMELINE SEQUENCE 2: SOKL achieves full lock, text/footer vanishes completely, CTA lands seamlessly on header line
+        // SEGMENT 2: Fast docking sequence. Structural stabilization of glass elements
         const t2 = Math.min(1, Math.max(0, (sY - stage1End) / (stage2End - stage1End)));
 
         heroHeadingBlock.style.opacity = 0;
         heroFooterBlock.style.opacity = 0;
-        
-        // Button snaps beautifully to global pinned sticky location without visual jumping
-        interactiveCta.style.visibility = 'hidden';
-        topActionBar.classList.add('visible');
 
-        // Stabilize vessels gracefully to plumb axis points
+        // Balance plumbing alignments
         const stabilizeLeft = lerp(-14, 0, t2);
         const stabilizeRight = lerp(14, 0, t2);
         glassLeft.style.transform = `rotate(${stabilizeLeft}deg)`;
         glassRight.style.transform = `rotate(${stabilizeRight}deg)`;
 
-        // SOKL arrives securely onto zero lock index configuration coords
-        const lockY = lerp(60, 0, t2);
+        // SOKL slides immediately into its final holding groove coordinates
+        const lockY = lerp(120, 0, t2);
         soklAssembly.style.transform = `translateX(-50%) translateY(${lockY}px)`;
 
-        // Narrative text block turns visible directly beneath stabilized components
+        // Narrative textual content fades in centered neatly under the hooked assets
         revelationText.classList.add('visible');
       }
     } else {
-      // AFTER "A GLASS TIPPED..." ARRIVES, EVERYTHING UNLOCKS INTO STANDARD STATIC DOCUMENT LAYOUT FLOW
-      topActionBar.classList.add('visible');
+      // FINAL SEQUENCE LOCKOUT: CONVERT LAYOUT COMPLETELY TO SIMPLE TRADITIONAL STATIC STATE FLOW
       revelationText.classList.add('visible');
-      
       glassLeft.style.transform = `rotate(0deg)`;
       glassRight.style.transform = `rotate(0deg)`;
       soklAssembly.style.transform = `translateX(-50%) translateY(0px)`;
 
-      // Convert layout elements smoothly into simple embedded positions matching the document page flow
+      // Elements morph directly into natural layout page context coordinates
       masterStage.style.position = 'absolute';
-      masterStage.style.top = `${stage2End + (vH * 0.48)}px`;
+      masterStage.style.top = `${stage2End + (vH * 0.50)}px`;
       masterStage.style.transform = 'translate(-50%, -50%)';
       masterStage.style.opacity = '1';
 
       revelationText.style.position = 'absolute';
-      revelationText.style.top = `${stage2End + (vH * 0.72)}px`;
+      revelationText.style.top = `${stage2End + (vH * 0.54)}px`;
       revelationText.style.transform = 'translate(-50%, -50%)';
     }
   }
@@ -437,7 +418,7 @@
   window.addEventListener('resize', corePipeline);
   corePipeline();
 
-  // Scroll visibility threshold logic setups
+  // Scroll disclosure transitions
   ( ()=>{
     const io=new IntersectionObserver(
       entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),
@@ -446,7 +427,7 @@
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   })();
 
-  // Multi color swatches logic rules
+  // Product profile colour modifiers
   const photo=document.getElementById('product-photo');
   document.querySelectorAll('.colour-chip').forEach(chip=>{
     chip.addEventListener('click',()=>{
