@@ -20,78 +20,84 @@
 
   #dusk-bg{position:fixed;inset:0;z-index:-2;background:var(--linen);}
 
-  /* TOP ACTION BAR — STAYS COMPLETELY STATIC ON THE TOP RIGHT EVERYWHERE */
+  /* TOP RIGHT ACTION CTA — COMPACTED SIZE */
   .fixed-header-actions {
-    position:fixed;top:2rem;right:clamp(1.5rem,5vw,4rem);
+    position:fixed;top:2rem;right:1.5rem;
     z-index:110;display:flex;align-items:center;
   }
+  .btn-primary.header-btn {
+    padding:0.75rem 1.6rem;
+    font-size:0.88rem;
+    font-weight:600;
+  }
 
-  /* BRANDING NAV — UNCONDITIONALLY POSITIONED ON THE FAR TOP LEFT */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:flex-start;padding:2rem clamp(1.5rem,5vw,4rem);pointer-events:none;}
-  .nav-mark{display:flex;align-items:center;width:280px;height:70px;color:var(--bark);transition:color 0.3s ease, transform 0.2s ease;pointer-events:auto;}
+  /* BRANDING NAV — PUSHED TO THE FAR EDGE CORNERS */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:flex-start;padding:1.5rem 1rem;pointer-events:none;}
+  .nav-mark{display:flex;align-items:center;width:260px;height:65px;color:var(--bark);transition:color 0.3s ease, transform 0.2s ease;pointer-events:auto;}
   .nav-mark:hover{transform:scale(1.02);color:var(--sage-deep);}
   .nav-mark svg{width:100%;height:100%;}
   .nav-mark svg path, .nav-mark svg text, .nav-mark svg tspan { transition: fill 0.3s ease; }
 
   @media(max-width:768px) {
-    .nav-mark { width:210px; height:55px; }
-    .fixed-header-actions { top:1.8rem; right:1.2rem; }
-    .btn-primary.header-btn { padding:0.75rem 1.4rem; font-size:0.85rem; }
+    nav { padding: 1rem 0.75rem; }
+    .nav-mark { width:190px; height:50px; }
+    .fixed-header-actions { top:1.4rem; right:0.75rem; }
+    .btn-primary.header-btn { padding:0.65rem 1.2rem; font-size:0.8rem; }
   }
 
-  /* TIMELINE TIMING COMPRESSION STAGE STACKS */
-  .scroll-container { position:relative; min-height:165vh; }
+  /* TIMELINE SCROLL HULL */
+  .scroll-container { position:relative; min-height:160vh; }
 
-  /* PORTABLE BALANCED GLASSES VIEWPORT SPACE */
+  /* HEIGHT BALANCED CENTERED STAGE VIEWPORT — HIGHER FOR TIGHTER SPACE */
   .master-stage-viewport {
-    position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);
-    width:220px;height:240px;
+    position:fixed;top:47%;left:50%;transform:translate(-50%, -50%);
+    width:220px;height:220px;
     pointer-events:none;z-index:5;
     display:flex;justify-content:center;align-items:flex-end;
   }
   .dual-glass-wrapper { width:100%; height:100%; position:relative; display:flex; justify-content:center; align-items:flex-end; }
 
-  .glass-balancer{ position:absolute; bottom:25px; width:50%; height:80%; display:flex; justify-content:center; align-items:flex-end; }
+  .glass-balancer{ position:absolute; bottom:15px; width:50%; height:85%; display:flex; justify-content:center; align-items:flex-end; }
   .glass-left { left:0; transform-origin: bottom right; }
   .glass-right { right:0; transform-origin: bottom left; }
   .wine-glass-svg { width:100%; height:100%; overflow:visible; }
 
-  /* SOKL Assembly Container — Hidden below screen bounds on page landing */
+  /* SOKL ASSEMBLY — MOVED DEEPER TO REMAIN COMPLETELY INVISIBLE ON LANDING */
   .sokl-assembly{
-    position:absolute;bottom:20px;left:50%;
-    transform:translateX(-50%) translateY(280px);
+    position:absolute;bottom:15px;left:50%;
+    transform:translateX(-50%) translateY(360px);
     width:70px;height:120px;z-index:10;
     display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    opacity:0;
   }
   .sokl-stake{ width:10px; height:68px; background:var(--terracotta); border-radius:4px; position:relative; }
   .sokl-stake::before{ content:''; position:absolute; top:8px; left:-15px; width:40px; height:9px; background:var(--terracotta-deep); border-radius:4px; }
   .grass-base { width:52px; height:22px; fill:var(--grass-green); margin-top:-2px; }
 
-  /* UNIFIED KINETIC SCROLL TRIGGERS */
+  /* SCROLL TRIGGER FRAME */
   .sequence-trigger-frame {
     position:relative; width:100%; min-height:100vh;
     display:flex; flex-direction:column; align-items:center;
   }
 
-  /* Headline Element shifted vertically upwards closer to nav alignment rules */
+  /* TEXT BLOCKS — BROUGHT SIGNIFICANTLY CLOSER TO THE GLASSES CENTER STAGE */
   .hero-headline-wrapper {
-    width:100%; max-width:850px; text-align:center; padding-top:max(8.5rem, 16vh);
+    width:100%; max-width:850px; text-align:center; padding-top:max(12rem, 24vh);
     position:relative; z-index:12; will-change: transform, opacity;
   }
-  .hero-headline-wrapper h1 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2.3rem,5.8vw,4.2rem); line-height:1.1; letter-spacing:-0.01em; max-width:18ch; margin:0 auto; }
+  .hero-headline-wrapper h1 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2.1rem,5.2vw,3.8rem); line-height:1.15; letter-spacing:-0.01em; max-width:18ch; margin:0 auto; }
   .hero-headline-wrapper h1 em { font-style:italic; font-weight:500; color:var(--sage-deep); }
 
-  /* Monolithic description container block alignment layout specs */
   .hero-unified-footer-block {
-    position:fixed; bottom:10vh; left:50%; transform:translateX(-50%);
+    position:fixed; bottom:20vh; left:50%; transform:translateX(-50%);
     width:100%; max-width:550px; text-align:center; display:flex; flex-direction:column; align-items:center;
     z-index:12; will-change: transform, opacity; padding:0 1.5rem;
   }
-  .hero-unified-footer-block p { font-size:clamp(1rem,1.5vw,1.15rem); color:var(--bark-soft); max-width:44ch; font-weight:400; margin:0 auto; line-height:1.6; }
+  .hero-unified-footer-block p { font-size:clamp(1rem,1.4vw,1.1rem); color:var(--bark-soft); max-width:44ch; font-weight:400; margin:0 auto; line-height:1.6; }
 
-  /* RESTRUCTURED CHRONOLOGY LAYER: ORIGIN + HOOKED REVELATION TEXT */
+  /* REVELATION SECTION LAYER */
   .sokl-revelation-block {
-    position:fixed; top:54%; left:50%; transform:translate(-50%, -50%);
+    position:fixed; top:52%; left:50%; transform:translate(-50%, -50%);
     width:100%; max-width:750px; text-align:center; z-index:4;
     opacity:0; visibility:hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
     padding:0 1.5rem; display:flex; flex-direction:column; align-items:center;
@@ -99,14 +105,14 @@
   .sokl-revelation-block.visible { opacity:1; visibility:visible; }
   .sokl-revelation-block h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(1.8rem,3.8vw,2.6rem); line-height:1.25; color:var(--bark); max-width:26ch; margin:0.8rem auto 0; }
 
-  /* COMPLETELY STATIC LAYOUT STRUCTURAL FLOW LOWER SECTIONS */
+  /* STANDARD SIMPLE CONTENT LOWER FLOW */
   section.standard-content { position:relative; padding:clamp(4rem,10vw,8rem) clamp(1.5rem,6vw,6rem); background:var(--linen); z-index:30; }
   .section-inner{ max-width:1140px; margin:0 auto; text-align:center; }
   .eyebrow{ font-size:0.76rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:500; margin-bottom:1rem; opacity:0.65; }
   .section-title{ font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2rem,4.5vw,3.1rem); line-height:1.15; margin-bottom:1.4rem; }
   .section-lede{ font-size:1.1rem; opacity:0.85; max-width:720px; margin:0 auto; line-height:1.75; }
 
-  .btn-primary{ background:var(--bark); color:var(--linen); padding:0.95rem 2.1rem; border-radius:100px; font-weight:600; font-size:0.95rem; transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease; display:inline-block; white-space:nowrap; border:none; cursor:pointer;}
+  .btn-primary{ background:var(--bark); color:var(--linen); padding:0.85rem 1.8rem; border-radius:100px; font-weight:600; font-size:0.92rem; transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease; display:inline-block; white-space:nowrap; border:none; cursor:pointer;}
   .btn-primary:hover{ background:var(--sage-deep); transform:translateY(-2px); }
 
   .features{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; margin-top:5rem; text-align:left; }
@@ -134,7 +140,7 @@
   footer{ text-align:center; padding:3rem 1.5rem 3.5rem; font-size:0.82rem; opacity:0.55; background:var(--linen); position:relative; z-index:30;}
   footer .foot-mark{ font-weight:600; opacity:1; margin-bottom:0.4rem; font-size:0.95rem; }
 
-  .reveal{ opacity:0; transform:translateY(24px); transition:opacity(0.8s) ease, transform 0.8s ease; }
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.8s ease, transform 0.8s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
 </style>
 </head>
@@ -202,7 +208,6 @@
 <div class="scroll-container">
   
   <div class="sequence-trigger-frame">
-    
     <div class="hero-headline-wrapper" id="hero-heading-block">
       <h1>A small thing that keeps your evening <em>upright</em>.</h1>
     </div>
@@ -210,7 +215,6 @@
     <div class="hero-unified-footer-block" id="hero-footer-block">
       <p>SOKL is a portable wine stake — 3D-printed, finished by hand, made to hold glasses steady wherever the grass isn't.</p>
     </div>
-
   </div>
 
   <div class="sequence-trigger-frame" id="static-revelation-trigger">
@@ -327,7 +331,6 @@
     const sY = window.scrollY;
     const vH = window.innerHeight;
     
-    // Smooth dynamic landscape ambient color interpolator
     const maxScroll = document.documentElement.scrollHeight - vH;
     const scrollP = maxScroll <= 0 ? 0 : Math.min(1, Math.max(0, sY / maxScroll));
     const col = colorAt(scrollP);
@@ -337,79 +340,81 @@
     document.body.style.color = dark ? L : D;
     if (brandingLogo) brandingLogo.style.color = dark ? L : D;
 
-    // COMPRESSED SCROLL CONFIGURATION BREAKPOINTS FOR MAXIMUM RESPONSIVENESS
-    const stage1End = vH * 0.45; // Fast dismissal transition boundary segment
-    const stage2End = vH * 0.90; // SOKL completely docks home right below dismissed frame text
+    // SCROLL TIMELINE COMPRESSION INTERVALS
+    const stage1End = vH * 0.45; 
+    const stage2End = vH * 0.90; 
 
     if (sY < stage2End) {
-      // KEEP ASSETS MOUNTED INTERACTIVELY WITHIN ACTIVE SEQUENCE RUNS
       masterStage.style.position = 'fixed';
-      masterStage.style.top = '50%';
+      masterStage.style.top = '47%';
       masterStage.style.transform = 'translate(-50%, -50%)';
       masterStage.style.opacity = '1';
       
       revelationText.style.position = 'fixed';
-      revelationText.style.top = '54%';
+      revelationText.style.top = '52%';
       revelationText.style.transform = 'translate(-50%, -50%)';
 
       if (sY <= stage1End) {
-        // SEGMENT 1: Dynamic dismissals, swinging elements drift outward, SOKL starts moving up from deep below
         const t1 = Math.min(1, Math.max(0, sY / stage1End));
 
-        // Text disappears cleanly in parallel
+        // Dismiss text panels
         heroHeadingBlock.style.opacity = 1 - t1;
         heroHeadingBlock.style.transform = `translateY(${-t1 * 50}px)`;
 
         heroFooterBlock.style.opacity = 1 - t1;
         heroFooterBlock.style.transform = `translate3d(-50%, ${-t1 * 40}px, 0)`;
 
-        // Angular tilt movements
+        // Glass tilt profiles
         const swingLeft = lerp(0, -14, t1);
         const swingRight = lerp(0, 14, t1);
         glassLeft.style.transform = `rotate(${swingLeft}deg)`;
         glassRight.style.transform = `rotate(${swingRight}deg)`;
 
-        // SOKL arrives onto the scene dynamically from completely hidden boundary locations
-        const climbY = lerp(280, 120, t1);
-        soklAssembly.style.transform = `translateX(-50%) translateY(${climbY}px)`;
+        // SOKL LOGIC: Stays invisible at landing (sY=0 -> opacity=0, deep below), 
+        // starts climbing and becomes visible rapidly after scrolling begins (t1 > 0.15)
+        if (sY > vH * 0.05) {
+          soklAssembly.style.opacity = Math.min(1, (sY - (vH * 0.05)) / (stage1End * 0.4));
+          const climbY = lerp(360, 120, t1);
+          soklAssembly.style.transform = `translateX(-50%) translateY(${climbY}px)`;
+        } else {
+          soklAssembly.style.opacity = 0;
+          soklAssembly.style.transform = `translateX(-50%) translateY(360px)`;
+        }
         
         revelationText.classList.remove('visible');
 
       } else {
-        // SEGMENT 2: Fast docking sequence. Structural stabilization of glass elements
         const t2 = Math.min(1, Math.max(0, (sY - stage1End) / (stage2End - stage1End)));
 
         heroHeadingBlock.style.opacity = 0;
         heroFooterBlock.style.opacity = 0;
 
-        // Balance plumbing alignments
+        // Reset plum alignment angles
         const stabilizeLeft = lerp(-14, 0, t2);
         const stabilizeRight = lerp(14, 0, t2);
         glassLeft.style.transform = `rotate(${stabilizeLeft}deg)`;
         glassRight.style.transform = `rotate(${stabilizeRight}deg)`;
 
-        // SOKL slides immediately into its final holding groove coordinates
+        // Fast lock setup coordinate indexing
+        soklAssembly.style.opacity = 1;
         const lockY = lerp(120, 0, t2);
         soklAssembly.style.transform = `translateX(-50%) translateY(${lockY}px)`;
 
-        // Narrative textual content fades in centered neatly under the hooked assets
         revelationText.classList.add('visible');
       }
     } else {
-      // FINAL SEQUENCE LOCKOUT: CONVERT LAYOUT COMPLETELY TO SIMPLE TRADITIONAL STATIC STATE FLOW
       revelationText.classList.add('visible');
       glassLeft.style.transform = `rotate(0deg)`;
       glassRight.style.transform = `rotate(0deg)`;
+      soklAssembly.style.opacity = 1;
       soklAssembly.style.transform = `translateX(-50%) translateY(0px)`;
 
-      // Elements morph directly into natural layout page context coordinates
       masterStage.style.position = 'absolute';
-      masterStage.style.top = `${stage2End + (vH * 0.50)}px`;
+      masterStage.style.top = `${stage2End + (vH * 0.47)}px`;
       masterStage.style.transform = 'translate(-50%, -50%)';
-      masterStage.style.opacity = '1';
 
       revelationText.style.position = 'absolute';
-      revelationText.style.top = `${stage2End + (vH * 0.54)}px`;
+      revelationText.style.top = `${stage2End + (vH * 0.52)}px`;
       revelationText.style.transform = 'translate(-50%, -50%)';
     }
   }
@@ -418,7 +423,6 @@
   window.addEventListener('resize', corePipeline);
   corePipeline();
 
-  // Scroll disclosure transitions
   ( ()=>{
     const io=new IntersectionObserver(
       entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),
@@ -427,7 +431,6 @@
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   })();
 
-  // Product profile colour modifiers
   const photo=document.getElementById('product-photo');
   document.querySelectorAll('.colour-chip').forEach(chip=>{
     chip.addEventListener('click',()=>{
