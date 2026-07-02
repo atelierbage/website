@@ -1,175 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atelier Båge — Tenu, a portable wine stake</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --linen: #F5EFE0;
-      --sand: #E8DFD0;
-      --bark: #3D3530;
-      --bark-soft: #5A4F46;
-      --sage: #7A8C7A;
-      --sage-deep: #566B56;
-      --terracotta: #C8915F;
-      --terracotta-deep: #A06B3E;
-      --grass-green: #4A6B4A;
-    }
-    
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
-      background: var(--linen); 
-      color: var(--bark); 
-      overflow-x: hidden; 
-      line-height: 1.6; 
-      transition: color 0.3s ease; 
-    }
-    a { color: inherit; text-decoration: none; }
-    img, svg { display: block; max-width: 100%; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier Båge — SOKL, a portable wine stake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --linen:#F5EFE0;--sand:#E8DFD0;--bark:#3D3530;--bark-soft:#5A4F46;
+    --sage:#7A8C7A;--sage-deep:#566B56;--terracotta:#C8915F;--terracotta-deep:#A06B3E;
+    --grass-green:#4A6B4A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--linen);color:var(--bark);overflow-x:hidden;line-height:1.6;transition:color 0.3s ease;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
 
-    #dusk-bg { position: fixed; inset: 0; z-index: -2; background: var(--linen); }
+  #dusk-bg{position:fixed;inset:0;z-index:-2;background:var(--linen);}
 
-    /* FIXED ACTION BUTTON */
-    .fixed-header-actions {
-      position: fixed; top: 2rem; right: 1.5rem;
-      z-index: 110; display: flex; align-items: center;
-    }
-    .btn-primary.header-btn {
-      padding: 0.75rem 1.6rem;
-      font-size: 0.88rem;
-      font-weight: 600;
-    }
+  /* FIXED ACTION BUTTON — COMPACT SIZE */
+  .fixed-header-actions {
+    position:fixed;top:2rem;right:1.5rem;
+    z-index:110;display:flex;align-items:center;
+  }
+  .btn-primary.header-btn {
+    padding:0.75rem 1.6rem;
+    font-size:0.88rem;
+    font-weight:600;
+  }
 
-    /* BRANDING NAV */
-    nav { position: fixed; top: 1.4rem; left: 1.5rem; z-index: 100; display: flex; justify-content: flex-start; pointer-events: none; }
-    .nav-mark { display: flex; align-items: center; width: 240px; height: 60px; color: var(--bark); transition: color 0.3s ease, transform 0.2s ease; pointer-events: auto; }
-    .nav-mark:hover { transform: scale(1.02); color: var(--sage-deep); }
-    .nav-mark svg { width: 100%; height: 100%; }
-    .nav-mark svg path, .nav-mark svg text, .nav-mark svg tspan { transition: fill 0.3s ease; }
+  /* BRANDING NAV — PINNED AT EQUAL OFFSET TO THE LEFT AS THE RIGHT BUTTON */
+  nav{position:fixed;top:1.4rem;left:1.5rem;z-index:100;display:flex;justify-content:flex-start;pointer-events:none;}
+  .nav-mark{display:flex;align-items:center;width:240px;height:60px;color:var(--bark);transition:color 0.3s ease, transform 0.2s ease;pointer-events:auto;}
+  .nav-mark:hover{transform:scale(1.02);color:var(--sage-deep);}
+  .nav-mark svg{width:100%;height:100%;}
+  .nav-mark svg path, .nav-mark svg text, .nav-mark svg tspan { transition: fill 0.3s ease; }
 
-    @media(max-width: 768px) {
-      nav { top: 1rem; left: 1rem; }
-      .nav-mark { width: 180px; height: 45px; }
-      .fixed-header-actions { top: 1.4rem; right: 1rem; }
-      .btn-primary.header-btn { padding: 0.65rem 1.2rem; font-size: 0.8rem; }
-    }
+  @media(max-width:768px) {
+    nav { top:1rem; left:1rem; }
+    .nav-mark { width:180px; height:45px; }
+    .fixed-header-actions { top:1.4rem; right:1rem; }
+    .btn-primary.header-btn { padding:0.65rem 1.2rem; font-size:0.8rem; }
+  }
 
-    /* TIMELINE SCROLL HULL */
-    .scroll-container { position: relative; min-height: 160vh; }
+  /* TIMELINE SCROLL HULL */
+  .scroll-container { position:relative; min-height:160vh; }
 
-    /* INTERACTIVE VIEWPORT STAGE */
-    .master-stage-viewport {
-      position: fixed; top: 54%; left: 50%; transform: translate(-50%, -50%);
-      width: 220px; height: 220px;
-      pointer-events: none; z-index: 5;
-      display: flex; justify-content: center; align-items: flex-end;
-    }
-    .dual-glass-wrapper { width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: flex-end; }
+  /* GLASSES INTERACTIVE VIEWPORT STAGE — DROPPED DOWN TO ELIMINATE OVERLAP */
+  .master-stage-viewport {
+    position:fixed;top:54%;left:50%;transform:translate(-50%, -50%);
+    width:220px;height:220px;
+    pointer-events:none;z-index:5;
+    display:flex;justify-content:center;align-items:flex-end;
+  }
+  .dual-glass-wrapper { width:100%; height:100%; position:relative; display:flex; justify-content:center; align-items:flex-end; }
 
-    .glass-balancer { position: absolute; bottom: 15px; width: 50%; height: 85%; display: flex; justify-content: center; align-items: flex-end; }
-    .glass-left { left: 0; transform-origin: bottom right; }
-    .glass-right { right: 0; transform-origin: bottom left; }
-    .wine-glass-svg { width: 100%; height: 100%; overflow: visible; }
+  .glass-balancer{ position:absolute; bottom:15px; width:50%; height:85%; display:flex; justify-content:center; align-items:flex-end; }
+  .glass-left { left:0; transform-origin: bottom right; }
+  .glass-right { right:0; transform-origin: bottom left; }
+  .wine-glass-svg { width:100%; height:100%; overflow:visible; }
 
-    /* ASSEMBLY ELEMENT */
-    .sokl-assembly {
-      position: absolute; bottom: 15px; left: 50%;
-      transform: translateX(-50%) translateY(360px);
-      width: 120px; height: 120px; z-index: 10;
-      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-      opacity: 0;
-    }
-    .sokl-assembly svg { width: 100%; height: 100%; object-fit: contain; }
+  /* SOKL ASSEMBLY ELEMENT */
+  .sokl-assembly{
+    position:absolute;bottom:15px;left:50%;
+    transform:translateX(-50%) translateY(360px);
+    width:70px;height:120px;z-index:10;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    opacity:0;
+  }
+  .sokl-stake{ width:10px; height:68px; background:var(--terracotta); border-radius:4px; position:relative; }
+  .sokl-stake::before{ content:''; position:absolute; top:8px; left:-15px; width:40px; height:9px; background:var(--terracotta-deep); border-radius:4px; }
+  .grass-base { width:52px; height:22px; fill:var(--grass-green); margin-top:-2px; }
 
-    /* UNIFIED TEXT PANELS */
-    .sequence-trigger-frame {
-      position: relative; width: 100%; min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center;
-    }
+  /* UNIFIED TEXT PANELS — REPOSITIONED VERTICALLY FOR PERFECT BALANCED LAYOUT */
+  .sequence-trigger-frame {
+    position:relative; width:100%; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+  }
 
-    .hero-headline-wrapper {
-      width: 100%; max-width: 850px; text-align: center; padding-top: max(7.5rem, 15vh);
-      position: relative; z-index: 12; will-change: transform, opacity;
-    }
-    .hero-headline-wrapper h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(2.1rem, 5.2vw, 3.8rem); line-height: 1.15; letter-spacing: -0.01em; max-width: 18ch; margin: 0 auto; }
-    .hero-headline-wrapper h1 em { font-style: italic; font-weight: 500; color: var(--sage-deep); }
+  /* HEADLINE — SHIFTED SHARPLY UPWARDS AWAY FROM CENTER */
+  .hero-headline-wrapper {
+    width:100%; max-width:850px; text-align:center; padding-top:max(7.5rem, 15vh);
+    position:relative; z-index:12; will-change: transform, opacity;
+  }
+  .hero-headline-wrapper h1 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2.1rem,5.2vw,3.8rem); line-height:1.15; letter-spacing:-0.01em; max-width:18ch; margin:0 auto; }
+  .hero-headline-wrapper h1 em { font-style:italic; font-weight:500; color:var(--sage-deep); }
 
-    .hero-unified-footer-block {
-      position: fixed; bottom: 14vh; left: 50%; transform: translateX(-50%);
-      width: 100%; max-width: 550px; text-align: center; display: flex; flex-direction: column; align-items: center;
-      z-index: 12; will-change: transform, opacity; padding: 0 1.5rem;
-    }
-    .hero-unified-footer-block p { font-size: clamp(1rem, 1.4vw, 1.1rem); color: var(--bark-soft); max-width: 44ch; font-weight: 400; margin: 0 auto; line-height: 1.6; }
+  /* EXPLANATORY SUBTEXT — PUSHED DOWNWARD FOR BREATHING SPACE */
+  .hero-unified-footer-block {
+    position:fixed; bottom:14vh; left:50%; transform:translateX(-50%);
+    width:100%; max-width:550px; text-align:center; display:flex; flex-direction:column; align-items:center;
+    z-index:12; will-change: transform, opacity; padding:0 1.5rem;
+  }
+  .hero-unified-footer-block p { font-size:clamp(1rem,1.4vw,1.1rem); color:var(--bark-soft); max-width:44ch; font-weight:400; margin:0 auto; line-height:1.6; }
 
-    /* REVELATION NARRATIVE BLOCK */
-    .sokl-revelation-block {
-      position: fixed; top: 52%; left: 50%; transform: translate(-50%, -50%);
-      width: 100%; max-width: 750px; text-align: center; z-index: 4;
-      opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
-      padding: 0 1.5rem; display: flex; flex-direction: column; align-items: center;
-    }
-    .sokl-revelation-block.visible { opacity: 1; visibility: visible; }
-    .sokl-revelation-block h2 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(1.8rem, 3.8vw, 2.6rem); line-height: 1.25; color: var(--bark); max-width: 26ch; margin: 0.8rem auto 0; }
+  /* REVELATION NARRATIVE BLOCK */
+  .sokl-revelation-block {
+    position:fixed; top:52%; left:50%; transform:translate(-50%, -50%);
+    width:100%; max-width:750px; text-align:center; z-index:4;
+    opacity:0; visibility:hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding:0 1.5rem; display:flex; flex-direction:column; align-items:center;
+  }
+  .sokl-revelation-block.visible { opacity:1; visibility:visible; }
+  .sokl-revelation-block h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(1.8rem,3.8vw,2.6rem); line-height:1.25; color:var(--bark); max-width:26ch; margin:0.8rem auto 0; }
 
-    /* STATIC SECTIONS */
-    section.standard-content { position: relative; padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 6rem); background: var(--linen); z-index: 30; }
-    .section-inner { max-width: 1140px; margin: 0 auto; text-align: center; }
-    .eyebrow { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; margin-bottom: 1rem; opacity: 0.65; }
-    .section-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(2rem, 4.5vw, 3.1rem); line-height: 1.15; margin-bottom: 1.4rem; }
-    .section-lede { font-size: 1.1rem; opacity: 0.85; max-width: 720px; margin: 0 auto; line-height: 1.75; }
+  /* SECONDARY STATIC LANDING RUNS */
+  section.standard-content { position:relative; padding:clamp(4rem,10vw,8rem) clamp(1.5rem,6vw,6rem); background:var(--linen); z-index:30; }
+  .section-inner{ max-width:1140px; margin:0 auto; text-align:center; }
+  .eyebrow{ font-size:0.76rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:500; margin-bottom:1rem; opacity:0.65; }
+  .section-title{ font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2rem,4.5vw,3.1rem); line-height:1.15; margin-bottom:1.4rem; }
+  .section-lede{ font-size:1.1rem; opacity:0.85; max-width:720px; margin:0 auto; line-height:1.75; }
 
-    .btn-primary { background: var(--bark); color: var(--linen); padding: 0.85rem 1.8rem; border-radius: 100px; font-weight: 600; font-size: 0.92rem; transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease; display: inline-block; white-space: nowrap; border: none; cursor: pointer; }
-    .btn-primary:hover { background: var(--sage-deep); transform: translateY(-2px); }
+  .btn-primary{ background:var(--bark); color:var(--linen); padding:0.85rem 1.8rem; border-radius:100px; font-weight:600; font-size:0.92rem; transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease; display:inline-block; white-space:nowrap; border:none; cursor:pointer;}
+  .btn-primary:hover{ background:var(--sage-deep); transform:translateY(-2px); }
 
-    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 5rem; text-align: left; }
-    @media(max-width: 860px) { .features { grid-template-columns: 1fr; gap: 2rem; } }
-    .feature { border-top: 1.5px solid currentColor; padding-top: 1.5rem; opacity: 0.92; }
-    .feature-icon { width: 42px; height: 42px; margin-bottom: 1.2rem; }
-    .feature h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.25rem; margin-bottom: 0.6rem; }
-    .feature p { font-size: 0.92rem; opacity: 0.8; }
+  .features{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; margin-top:5rem; text-align:left; }
+  @media(max-width:860px){ .features{ grid-template-columns:1fr; gap:2rem; } }
+  .feature{ border-top:1.5px solid currentColor; padding-top:1.5rem; opacity:0.92; }
+  .feature-icon{ width:42px; height:42px; margin-bottom:1.2rem; }
+  .feature h3{ font-family:'Fraunces',serif; font-weight:500; font-size:1.25rem; margin-bottom:0.6rem; }
+  .feature p{ font-size:0.92rem; opacity:0.8; }
 
-    .colours { text-align: center; background: #E8DFD0 !important; }
-    .colour-row { display: flex; justify-content: center; gap: clamp(0.8rem, 3vw, 2rem); margin-top: 3rem; flex-wrap: wrap; }
-    .colour-chip { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; cursor: pointer; }
-    .swatch { width: 64px; height: 64px; border-radius: 50%; border: 2px solid transparent; transition: transform 0.25s ease, border-color 0.25s ease; }
-    .colour-chip:hover .swatch { transform: scale(1.08); }
-    .colour-chip.active .swatch { border-color: currentColor; }
-    .colour-chip span { font-size: 0.82rem; font-weight: 500; opacity: 0.75; }
-    
-    /* Image container layout stabilization */
-    .hero-image-container { 
-      width: min(420px, 80vw); 
-      margin: 3rem auto 0; 
-      border-radius: 24px; 
-      overflow: hidden; 
-      aspect-ratio: 4 / 5;
-      background: rgba(0,0,0,0.03);
-    }
-    .hero-image-container img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.25s ease; }
+  .colours{ text-align:center; background:#E8DFD0 !important; }
+  .colour-row{ display:flex; justify-content:center; gap:clamp(0.8rem,3vw,2rem); margin-top:3rem; flex-wrap:wrap; }
+  .colour-chip{ display:flex; flex-direction:column; align-items:center; gap:0.9rem; cursor:pointer; }
+  .swatch{ width:64px; height:64px; border-radius:50%; border:2px solid transparent; transition:transform 0.25s ease, border-color 0.25s ease; }
+  .colour-chip:hover .swatch{ transform:scale(1.08); }
+  .colour-chip.active .swatch{ border-color:currentColor; }
+  .colour-chip span{ font-size:0.82rem; font-weight:500; opacity:0.75; }
+  .hero-image-container{ width:min(420px,80vw); margin:3rem auto 0; border-radius:24px; overflow:hidden; }
+  .hero-image-container img{ width:100%; height:auto; object-fit:cover; transition:opacity 0.3s ease; }
 
-    .philosophy { text-align: center; }
-    .philosophy blockquote { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.35; max-width: 22ch; margin: 0 auto 1.6rem; }
-    .philosophy cite { font-family: 'Plus Jakarta Sans', sans-serif; font-style: normal; font-size: 0.85rem; opacity: 0.65; letter-spacing: 0.04em; }
+  .philosophy{ text-align:center; }
+  .philosophy blockquote{ font-family:'Fraunces',serif; font-weight:400; font-style:italic; font-size:clamp(1.6rem,4vw,2.6rem); line-height:1.35; max-width:22ch; margin:0 auto 1.6rem; }
+  .philosophy cite{ font-family:'Plus Jakarta Sans',sans-serif; font-style:normal; font-size:0.85rem; opacity:0.65; letter-spacing:0.04em; }
 
-    .final-cta { text-align: center; min-height: 65vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem; }
-    footer { text-align: center; padding: 3rem 1.5rem 3.5rem; font-size: 0.82rem; opacity: 0.55; background: var(--linen); position: relative; z-index: 30; }
-    footer .foot-mark { font-weight: 600; opacity: 1; margin-bottom: 0.4rem; font-size: 0.95rem; }
+  .final-cta{ text-align:center; min-height:65vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.8rem; }
+  footer{ text-align:center; padding:3rem 1.5rem 3.5rem; font-size:0.82rem; opacity:0.55; background:var(--linen); position:relative; z-index:30;}
+  footer .foot-mark{ font-weight:600; opacity:1; margin-bottom:0.4rem; font-size:0.95rem; }
 
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-  </style>
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+</style>
 </head>
 <body>
 
 <div id="dusk-bg"></div>
 
 <div class="fixed-header-actions">
-  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary header-btn" target="_blank" rel="noopener">Get a Tenu — 250 SEK</a>
+  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary header-btn" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
 </div>
 
 <nav id="site-nav">
@@ -182,7 +163,7 @@
                     <text x="315.299px" y="728.197px" style="font-family:'Plus Jakarta Sans', sans-serif;font-weight:600;font-size:371.659px;fill:currentColor;">a<tspan x="524.171px 660.942px " y="728.197px 728.197px ">te</tspan>lier båge</text>
                 </g>
                 <g transform="matrix(0.848532,0,0,2.274212,1470.081593,-752.715865)">
-                    <path d="M474.288,693.381C470.228,700.908 464.665,707.589 457.598,713.424C450.32,719.432 441.895,724.14 432.325,727.547C422.755,730.954 412.24,732.657 400.781,732.657C387.649,732.657 376.034,730.257 365.938,725.456C355.841,720.655 347.943,713.997 342.244,705.479C336.545,696.962 333.696,687.098 333.696,675.886C333.696,665.232 336.019,655.6 340.665,646.99C345.31,638.379 352.511,631.101 362.267,625.155C372.023,619.208 384.397,614.996 399.387,612.518L467.493,601.238L467.493,592.17C467.493,581.33 463.483,572.472 455.461,565.596C447.439,558.721 436.924,555.283 423.916,555.283C412.333,555.283 402.159,558.24 393.394,564.156C384.629,570.072 378.14,577.768 373.928,587.245L343.824,571.636C347.602,562.468 353.595,554.261 361.803,547.013C370.01,539.766 379.534,534.052 390.374,529.87C401.214,525.689 412.612,523.599 424.567,523.599C439.805,523.599 453.293,526.51 465.031,532.333C468.32,533.964 471.405,535.77 474.288,537.752L474.288,446.851L509.131,446.851L509.131,554.871C515.953,546.407 524.346,539.467 534.311,534.052C547.133,527.083 561.814,523.599 578.352,523.599C597.307,523.599 614.264,528.167 629.223,537.304C644.183,546.44 656.014,558.86 664.717,574.562C673.42,590.265 677.771,608.12 677.771,628.128C677.771,647.888 673.435,665.681 664.763,681.507C656.091,697.334 644.275,709.815 629.316,718.952C614.357,728.089 597.338,732.657 578.26,732.657C561.968,732.657 547.195,729.095 533.939,721.972C523.372,716.293 514.793,708.666 508.202,699.091L508.202,728.197L474.288,728.197L474.288,693.381ZM467.493,630.434L406.913,640.671C394.153,642.901 384.877,646.974 379.085,652.89C373.293,658.805 370.397,666.037 370.397,674.585C370.397,682.824 373.634,689.699 380.107,695.212C386.58,700.725 394.865,703.482 404.962,703.482C417.474,703.482 428.407,700.803 437.761,695.445C447.114,690.087 454.408,682.839 459.642,673.703C464.876,664.566 467.493,554.423 467.493,643.273L467.493,630.434ZM575.472,699.208C588.108,699.208 599.367,696.11 609.247,689.916C619.127,683.722 626.9,675.251 632.568,664.504C638.236,653.757 641.07,641.631 641.07,628.128C641.07,614.438 638.236,602.282 632.568,591.659C626.9,581.036 619.127,572.611 609.247,566.386C599.367,560.161 588.108,557.048 575.472,557.048C562.96,557.048 551.686,660.145 541.651,666.34C531.616,572.534 523.688,581.005 517.865,591.752C512.042,602.499 509.131,614.624 509.131,628.128C509.131,641.631 512.042,553.757 517.865,664.504C523.688,675.251 531.616,683.722 541.651,689.916C551.686,696.11 562.96,699.208 575.472,699.208Z" style="fill:currentColor;"/>
+                    <path d="M474.288,693.381C470.228,700.908 464.665,707.589 457.598,713.424C450.32,719.432 441.895,724.14 432.325,727.547C422.755,730.954 412.24,732.657 400.781,732.657C387.649,732.657 376.034,730.257 365.938,725.456C355.841,720.655 347.943,713.997 342.244,705.479C336.545,696.962 333.696,687.098 333.696,675.886C333.696,665.232 336.019,655.6 340.665,646.99C345.31,638.379 352.511,631.101 362.267,625.155C372.023,619.208 384.397,614.996 399.387,612.518L467.493,601.238L467.493,592.17C467.493,581.33 463.483,572.472 455.461,565.596C447.439,558.721 436.924,555.283 423.916,555.283C412.333,555.283 402.159,558.24 393.394,564.156C384.629,570.072 378.14,577.768 373.928,587.245L343.824,571.636C347.602,562.468 353.595,554.261 361.803,547.013C370.01,539.766 379.534,534.052 390.374,529.87C401.214,525.689 412.612,523.599 424.567,523.599C439.805,523.599 453.293,526.51 465.031,532.333C468.32,533.964 471.405,535.77 474.288,537.752L474.288,446.851L509.131,446.851L509.131,554.871C515.953,546.407 524.346,539.467 534.311,534.052C547.133,527.083 561.814,523.599 578.352,523.599C597.307,523.599 614.264,528.167 629.223,537.304C644.183,546.44 656.014,558.86 664.717,574.562C673.42,590.265 677.771,608.12 677.771,628.128C677.771,647.888 673.435,665.681 664.763,681.507C656.091,697.334 644.275,709.815 629.316,718.952C614.357,728.089 597.338,732.657 578.26,732.657C561.968,732.657 547.195,729.095 533.939,721.972C523.372,716.293 514.793,708.666 508.202,699.091L508.202,728.197L474.288,728.197L474.288,693.381ZM467.493,630.434L406.913,640.671C394.153,642.901 384.877,646.974 379.085,652.89C373.293,658.805 370.397,666.037 370.397,674.585C370.397,682.824 373.634,689.699 380.107,695.212C386.58,700.725 394.865,703.482 404.962,703.482C417.474,703.482 428.407,700.803 437.761,695.445C447.114,690.087 454.408,682.839 459.642,673.703C464.876,664.566 467.493,554.423 467.493,643.273L467.493,630.434ZM575.472,699.208C588.108,699.208 599.367,696.11 609.247,689.916C619.127,683.722 626.9,675.251 632.568,664.504C638.236,653.757 641.07,641.631 641.07,628.128C641.07,614.438 638.236,602.282 632.568,591.659C626.9,581.036 619.127,572.611 609.247,566.386C599.367,560.161 588.108,557.048 575.472,557.048C562.96,557.048 551.686,560.145 541.651,566.34C531.616,572.534 523.688,581.005 517.865,591.752C512.042,602.499 509.131,614.624 509.131,628.128C509.131,641.631 512.042,553.757 517.865,664.504C523.688,675.251 531.616,683.722 541.651,689.916C551.686,696.11 562.96,699.208 575.472,699.208Z" style="fill:currentColor;"/>
                 </g>
             </g>
         </g>
@@ -216,23 +197,9 @@
     </div>
 
     <div id="scroll-sokl-assembly" class="sokl-assembly">
-      <svg width="100%" height="100%" viewBox="0 0 827 827" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" aria-label="Tenu wine stake illustration">
-        <g transform="matrix(1,0,0,1,0,-1062)">
-            <g id="Logo15" transform="matrix(1,0,0,1,0,-0.992126)">
-                <rect x="0" y="1062.992" width="826.772" height="826.772" style="fill:none;"/>
-                <clipPath id="_clip1">
-                    <rect x="0" y="1062.992" width="826.772" height="826.772"/>
-                </clipPath>
-                <g clip-path="url(#_clip1)">
-                    <g transform="matrix(1,0,0,1,0,0.992126)">
-                        <path d="M398.177,1559.451L398.177,1529.32L395.723,1529.45L395.596,1529.337L395.535,1529.279L395.477,1529.222L395.42,1529.164L395.365,1529.106L395.312,1529.048L395.262,1528.989L395.213,1528.931L395.166,1528.872L395.121,1528.813L395.079,1528.754L395.038,1528.695L394.999,1528.635L394.963,1528.576L394.928,1528.516L394.896,1528.456L394.865,1528.397L394.837,1528.337L394.811,1528.277L394.787,1528.217L394.765,1528.156L394.745,1528.096L394.727,1528.036L394.712,1527.976L394.698,1527.916L394.687,1527.855L394.677,1527.795L394.67,1527.735L394.665,1527.675L394.662,1527.614L394.661,1527.554L394.661,1516.425L394.85,1516.506L395.197,1516.648L395.557,1516.788L396.315,1517.06L397.12,1517.32L397.97,1517.568L398.861,1517.802L399.792,1518.022L400.756,1518.227L401.752,1518.415L402.773,1518.587L403.816,1518.742L404.877,1518.88L407.032,1519.102L409.203,1519.254L411.358,1519.34L413.394,1519.361L413.466,1519.361L415.504,1519.325L417.377,1519.241L419.279,1519.105L421.187,1518.913L423.077,1518.664L424.006,1518.518L424.921,1518.357L425.817,1518.181L426.692,1517.992L427.542,1517.789L428.363,1517.573L429.152,1517.344L429.907,1517.103L430.624,1516.851L431.301,1516.588L431.624,1516.453L431.689,1516.425L431.689,1527.554L431.688,1527.614L431.685,1527.674L431.68,1527.735L431.672,1527.795L431.663,1527.856L431.651,1527.917L431.637,1527.979L431.621,1528.04L431.603,1528.102L431.582,1528.163L431.559,1528.225L431.534,1528.287L431.507,1528.35L431.477,1528.412L431.445,1528.474L431.41,1528.537L431.373,1528.599L431.333,1528.662L431.292,1528.725L431.247,1528.787L431.201,1528.85L431.151,1528.913L431.1,1528.976L431.046,1529.039L430.989,1529.101L430.93,1529.164L430.868,1529.227L430.804,1529.289L430.737,1529.352L430.668,1529.414L430.596,1529.477L430.522,1529.539L430.365,1529.663L430.199,1529.787L430.022,1529.909L429.836,1530.031L429.639,1530.152L429.432,1530.272L429.235,1530.38L429.235,1559.451L398.177,1559.451ZM413.394,1526.543L413.394,1531.532L414.206,1532.472L414.206,1527.482L413.394,1526.543Z" style="fill:rgb(216,177,141);"/>
-                    </g>
-                    <g transform="matrix(1,0,0,1,0,0.992126)">
-                        <path d="M435.866,1224.587L435.866,1512.401L435.865,1512.476L435.861,1512.55L435.854,1512.625L435.845,1512.7|435.833,1512.776|435.818,1512.852|435.703,1513.233|435.637,1513.386|435.517,1513.618|435.421,1513.772|435.314,1513.927|435.195,1514.082|434.993,1514.314|434.843,1514.468|434.68,1514.622|434.505,1514.775|434.22,1515.004|433.797,1515.305|433.324,1515.602|432.804,1515.893|432.237,1516.177|431.689,1516.425|431.301,1516.588|430.624,1516.851|429.152,1517.344|427.542,1517.789|425.817,1518.181|424.006,1518.518|421.187,1518.913|417.377,1519.241|413.466,1519.361|411.358,1519.34|407.032,1519.102|403.816,1518.742|401.752,1518.415|399.792,1518.022|397.97,1517.568|396.315,1517.06|395.197,1516.648|394.661,1516.425|394.195,1516.216|393.593,1515.918|393.046,1515.614|392.553,1515.305|392.116,1514.993|391.918,1514.836|391.733,1514.679|391.562,1514.521|391.404,1514.363|391.26,1514.206|391.128,1514.048|391.01,1513.891|390.904,1513.735|390.811,1513.579|390.73,1513.423|390.661,1513.269|390.604,1513.115|390.564,1512.984|390.541,1512.896|390.522,1512.807|390.507,1512.718|390.496,1512.628|390.488,1512.537|390.484,1512.447|390.484,1512.401|390.484,1462.196|390.484,1224.514|413.092,1224.55|435.866,1224.587Z" style="fill:rgb(200,145,95);"/>
-                    </g>
-                </g>
-            </g>
-        </g>
+      <div class="sokl-stake"></div>
+      <svg class="grass-base" viewBox="0 0 56 22">
+        <path d="M0 22 L6 6 L12 22 L18 2 L24 22 L32 4 L38 22 L46 8 L51 22 L56 12 L56 22 Z"/>
       </svg>
     </div>
 
@@ -247,7 +214,7 @@
     </div>
 
     <div class="hero-unified-footer-block" id="hero-footer-block">
-      <p>Tenu is a portable wine stake — 3D-printed, finished by hand, made to hold glasses steady wherever the grass isn't.</p>
+      <p>SOKL is a portable wine stake — 3D-printed, finished by hand, made to hold glasses steady wherever the grass isn't.</p>
     </div>
   </div>
 
@@ -262,7 +229,7 @@
 
 <section class="standard-content" id="more-story" style="padding-top:2rem;">
   <div class="section-inner">
-    <p class="section-lede" style="color:var(--bark-soft);">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. Tenu started as a fix for one evening and became the first thing Atelier Båge makes.</p>
+    <p class="section-lede" style="color:var(--bark-soft);">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. SOKL started as a fix for one evening and became the first thing Atelier Båge makes.</p>
   </div>
 
   <div class="section-inner features reveal">
@@ -306,7 +273,7 @@
       </div>
     </div>
     <div class="hero-image-container reveal">
-      <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="Tenu portable wine stake in sage green">
+      <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="SOKL portable wine stake in sage green">
     </div>
   </div>
 </section>
@@ -321,7 +288,7 @@
 <section class="final-cta standard-content" id="buy">
   <p class="eyebrow">Ready when you are</p>
   <h2 class="section-title reveal">An evening that doesn't spill.</h2>
-  <p class="reveal" style="margin-bottom:1.5rem; opacity:0.75;">Tenu — 250 SEK. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
+  <p class="reveal" style="margin-bottom:1.5rem; opacity:0.75;">SOKL — 250 SEK. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
   <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary reveal" target="_blank" rel="noopener">Shop on Etsy</a>
 </section>
 
@@ -361,18 +328,11 @@
   }
   const lum=rgb=>{ const m=rgb.match(/\d+/g).map(Number); return(0.299*m[0]+0.587*m[1]+0.114*m[2])/255; };
 
-  // Cache dimensions to minimize layout thrashing inside scroll loop
-  let vH = window.innerHeight;
-  let maxScroll = document.documentElement.scrollHeight - vH;
-
-  function updateDimensions() {
-    vH = window.innerHeight;
-    maxScroll = document.documentElement.scrollHeight - vH;
-    corePipeline();
-  }
-
   function corePipeline(){
     const sY = window.scrollY;
+    const vH = window.innerHeight;
+    
+    const maxScroll = document.documentElement.scrollHeight - vH;
     const scrollP = maxScroll <= 0 ? 0 : Math.min(1, Math.max(0, sY / maxScroll));
     const col = colorAt(scrollP);
     duskBg.style.background = col;
@@ -397,17 +357,20 @@
       if (sY <= stage1End) {
         const t1 = Math.min(1, Math.max(0, sY / stage1End));
 
+        // Dismiss headings smoothly
         heroHeadingBlock.style.opacity = 1 - t1;
         heroHeadingBlock.style.transform = `translateY(${-t1 * 50}px)`;
 
         heroFooterBlock.style.opacity = 1 - t1;
         heroFooterBlock.style.transform = `translate3d(-50%, ${-t1 * 40}px, 0)`;
 
+        // Spread glasses on scroll tilt sequences
         const swingLeft = lerp(0, -14, t1);
         const swingRight = lerp(0, 14, t1);
         glassLeft.style.transform = `rotate(${swingLeft}deg)`;
         glassRight.style.transform = `rotate(${swingRight}deg)`;
 
+        // Delayed SOKL appearance sequence trigger threshold check
         if (sY > vH * 0.08) {
           soklAssembly.style.opacity = Math.min(1, (sY - (vH * 0.08)) / (stage1End * 0.4));
           const climbY = lerp(360, 120, t1);
@@ -453,41 +416,24 @@
     }
   }
 
-  // Ticking flag for performant scroll debouncing
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        corePipeline();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
+  window.addEventListener('scroll', corePipeline, {passive:true});
+  window.addEventListener('resize', corePipeline);
+  corePipeline();
 
-  window.addEventListener('resize', updateDimensions);
-  updateDimensions();
-
-  (() => {
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }),
-      { threshold: 0.10 }
+  ( ()=>{
+    const io=new IntersectionObserver(
+      entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),
+      {threshold:0.10}
     );
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   })();
 
-  const photo = document.getElementById('product-photo');
-  document.querySelectorAll('.colour-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('.colour-chip').forEach(c => c.classList.remove('active'));
+  const photo=document.getElementById('product-photo');
+  document.querySelectorAll('.colour-chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      document.querySelectorAll('.colour-chip').forEach(c=>c.classList.remove('active'));
       chip.classList.add('active');
-      if (photo) { 
-        photo.style.opacity = 0; 
-        setTimeout(() => { 
-          photo.src = chip.dataset.img; 
-          photo.style.opacity = 1; 
-        }, 250); 
-      }
+      if(photo){ photo.style.opacity=0; setTimeout(()=>{photo.src=chip.dataset.img;photo.style.opacity=1;},250); }
     });
   });
 </script>
