@@ -1,154 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Atelier Båge — SOKL, a portable wine stake</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --linen:#F5EFE0;--sand:#E8DFD0;--bark:#3D3530;--bark-soft:#5A4F46;
-    --sage:#7A8C7A;--sage-deep:#566B56;--terracotta:#C8915F;--terracotta-deep:#A06B3E;
-    --grass-green:#4A6B4A;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--linen);color:var(--bark);overflow-x:hidden;line-height:1.6;transition:color 0.3s ease;}
-  a{color:inherit;text-decoration:none;}
-  img,svg{display:block;max-width:100%;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier Båge — Tenu, a portable wine stake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --linen: #F5EFE0;
+      --sand: #E8DFD0;
+      --bark: #3D3530;
+      --bark-soft: #5A4F46;
+      --sage: #7A8C7A;
+      --sage-deep: #566B56;
+      --terracotta: #C8915F;
+      --terracotta-deep: #A06B3E;
+      --grass-green: #4A6B4A;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--linen); 
+      color: var(--bark); 
+      overflow-x: hidden; 
+      line-height: 1.6; 
+      transition: color 0.3s ease; 
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
 
-  #dusk-bg{position:fixed;inset:0;z-index:-2;background:var(--linen);}
+    #dusk-bg { position: fixed; inset: 0; z-index: -2; background: var(--linen); }
 
-  /* FIXED ACTION BUTTON — COMPACT SIZE */
-  .fixed-header-actions {
-    position:fixed;top:2rem;right:1.5rem;
-    z-index:110;display:flex;align-items:center;
-  }
-  .btn-primary.header-btn {
-    padding:0.75rem 1.6rem;
-    font-size:0.88rem;
-    font-weight:600;
-  }
+    /* FIXED ACTION BUTTON */
+    .fixed-header-actions {
+      position: fixed; top: 2rem; right: 1.5rem;
+      z-index: 110; display: flex; align-items: center;
+    }
+    .btn-primary.header-btn {
+      padding: 0.75rem 1.6rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
 
-  /* BRANDING NAV — PINNED AT EQUAL OFFSET TO THE LEFT AS THE RIGHT BUTTON */
-  nav{position:fixed;top:1.4rem;left:1.5rem;z-index:100;display:flex;justify-content:flex-start;pointer-events:none;}
-  .nav-mark{display:flex;align-items:center;width:240px;height:60px;color:var(--bark);transition:color 0.3s ease, transform 0.2s ease;pointer-events:auto;}
-  .nav-mark:hover{transform:scale(1.02);color:var(--sage-deep);}
-  .nav-mark svg{width:100%;height:100%;}
-  .nav-mark svg path, .nav-mark svg text, .nav-mark svg tspan { transition: fill 0.3s ease; }
+    /* BRANDING NAV */
+    nav { position: fixed; top: 1.4rem; left: 1.5rem; z-index: 100; display: flex; justify-content: flex-start; pointer-events: none; }
+    .nav-mark { display: flex; align-items: center; width: 240px; height: 60px; color: var(--bark); transition: color 0.3s ease, transform 0.2s ease; pointer-events: auto; }
+    .nav-mark:hover { transform: scale(1.02); color: var(--sage-deep); }
+    .nav-mark svg { width: 100%; height: 100%; }
+    .nav-mark svg path, .nav-mark svg text, .nav-mark svg tspan { transition: fill 0.3s ease; }
 
-  @media(max-width:768px) {
-    nav { top:1rem; left:1rem; }
-    .nav-mark { width:180px; height:45px; }
-    .fixed-header-actions { top:1.4rem; right:1rem; }
-    .btn-primary.header-btn { padding:0.65rem 1.2rem; font-size:0.8rem; }
-  }
+    @media(max-width: 768px) {
+      nav { top: 1rem; left: 1rem; }
+      .nav-mark { width: 180px; height: 45px; }
+      .fixed-header-actions { top: 1.4rem; right: 1rem; }
+      .btn-primary.header-btn { padding: 0.65rem 1.2rem; font-size: 0.8rem; }
+    }
 
-  /* TIMELINE SCROLL HULL */
-  .scroll-container { position:relative; min-height:160vh; }
+    /* TIMELINE SCROLL HULL */
+    .scroll-container { position: relative; min-height: 160vh; }
 
-  /* GLASSES INTERACTIVE VIEWPORT STAGE — DROPPED DOWN TO ELIMINATE OVERLAP */
-  .master-stage-viewport {
-    position:fixed;top:54%;left:50%;transform:translate(-50%, -50%);
-    width:220px;height:220px;
-    pointer-events:none;z-index:5;
-    display:flex;justify-content:center;align-items:flex-end;
-  }
-  .dual-glass-wrapper { width:100%; height:100%; position:relative; display:flex; justify-content:center; align-items:flex-end; }
+    /* INTERACTIVE VIEWPORT STAGE */
+    .master-stage-viewport {
+      position: fixed; top: 54%; left: 50%; transform: translate(-50%, -50%);
+      width: 220px; height: 220px;
+      pointer-events: none; z-index: 5;
+      display: flex; justify-content: center; align-items: flex-end;
+    }
+    .dual-glass-wrapper { width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: flex-end; }
 
-  .glass-balancer{ position:absolute; bottom:15px; width:50%; height:85%; display:flex; justify-content:center; align-items:flex-end; }
-  .glass-left { left:0; transform-origin: bottom right; }
-  .glass-right { right:0; transform-origin: bottom left; }
-  .wine-glass-svg { width:100%; height:100%; overflow:visible; }
+    .glass-balancer { position: absolute; bottom: 15px; width: 50%; height: 85%; display: flex; justify-content: center; align-items: flex-end; }
+    .glass-left { left: 0; transform-origin: bottom right; }
+    .glass-right { right: 0; transform-origin: bottom left; }
+    .wine-glass-svg { width: 100%; height: 100%; overflow: visible; }
 
-  /* SOKL ASSEMBLY ELEMENT — Dynamic container matching new artwork viewbox ratios */
-  .sokl-assembly{
-    position:absolute;bottom:15px;left:50%;
-    transform:translateX(-50%) translateY(360px);
-    width:120px;height:120px;z-index:10;
-    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-    opacity:0;
-  }
-  .sokl-assembly svg { width:100%; height:100%; object-fit:contain; }
+    /* ASSEMBLY ELEMENT */
+    .sokl-assembly {
+      position: absolute; bottom: 15px; left: 50%;
+      transform: translateX(-50%) translateY(360px);
+      width: 120px; height: 120px; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      opacity: 0;
+    }
+    .sokl-assembly svg { width: 100%; height: 100%; object-fit: contain; }
 
-  /* UNIFIED TEXT PANELS — REPOSITIONED VERTICALLY FOR PERFECT BALANCED LAYOUT */
-  .sequence-trigger-frame {
-    position:relative; width:100%; min-height:100vh;
-    display:flex; flex-direction:column; align-items:center;
-  }
+    /* UNIFIED TEXT PANELS */
+    .sequence-trigger-frame {
+      position: relative; width: 100%; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+    }
 
-  /* HEADLINE — SHIFTED SHARPLY UPWARDS AWAY FROM CENTER */
-  .hero-headline-wrapper {
-    width:100%; max-width:850px; text-align:center; padding-top:max(7.5rem, 15vh);
-    position:relative; z-index:12; will-change: transform, opacity;
-  }
-  .hero-headline-wrapper h1 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2.1rem,5.2vw,3.8rem); line-height:1.15; letter-spacing:-0.01em; max-width:18ch; margin:0 auto; }
-  .hero-headline-wrapper h1 em { font-style:italic; font-weight:500; color:var(--sage-deep); }
+    .hero-headline-wrapper {
+      width: 100%; max-width: 850px; text-align: center; padding-top: max(7.5rem, 15vh);
+      position: relative; z-index: 12; will-change: transform, opacity;
+    }
+    .hero-headline-wrapper h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(2.1rem, 5.2vw, 3.8rem); line-height: 1.15; letter-spacing: -0.01em; max-width: 18ch; margin: 0 auto; }
+    .hero-headline-wrapper h1 em { font-style: italic; font-weight: 500; color: var(--sage-deep); }
 
-  /* EXPLANATORY SUBTEXT — PUSHED DOWNWARD FOR BREATHING SPACE */
-  .hero-unified-footer-block {
-    position:fixed; bottom:14vh; left:50%; transform:translateX(-50%);
-    width:100%; max-width:550px; text-align:center; display:flex; flex-direction:column; align-items:center;
-    z-index:12; will-change: transform, opacity; padding:0 1.5rem;
-  }
-  .hero-unified-footer-block p { font-size:clamp(1rem,1.4vw,1.1rem); color:var(--bark-soft); max-width:44ch; font-weight:400; margin:0 auto; line-height:1.6; }
+    .hero-unified-footer-block {
+      position: fixed; bottom: 14vh; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 550px; text-align: center; display: flex; flex-direction: column; align-items: center;
+      z-index: 12; will-change: transform, opacity; padding: 0 1.5rem;
+    }
+    .hero-unified-footer-block p { font-size: clamp(1rem, 1.4vw, 1.1rem); color: var(--bark-soft); max-width: 44ch; font-weight: 400; margin: 0 auto; line-height: 1.6; }
 
-  /* REVELATION NARRATIVE BLOCK */
-  .sokl-revelation-block {
-    position:fixed; top:52%; left:50%; transform:translate(-50%, -50%);
-    width:100%; max-width:750px; text-align:center; z-index:4;
-    opacity:0; visibility:hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
-    padding:0 1.5rem; display:flex; flex-direction:column; align-items:center;
-  }
-  .sokl-revelation-block.visible { opacity:1; visibility:visible; }
-  .sokl-revelation-block h2 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(1.8rem,3.8vw,2.6rem); line-height:1.25; color:var(--bark); max-width:26ch; margin:0.8rem auto 0; }
+    /* REVELATION NARRATIVE BLOCK */
+    .sokl-revelation-block {
+      position: fixed; top: 52%; left: 50%; transform: translate(-50%, -50%);
+      width: 100%; max-width: 750px; text-align: center; z-index: 4;
+      opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
+      padding: 0 1.5rem; display: flex; flex-direction: column; align-items: center;
+    }
+    .sokl-revelation-block.visible { opacity: 1; visibility: visible; }
+    .sokl-revelation-block h2 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(1.8rem, 3.8vw, 2.6rem); line-height: 1.25; color: var(--bark); max-width: 26ch; margin: 0.8rem auto 0; }
 
-  /* SECONDARY STATIC LANDING RUNS */
-  section.standard-content { position:relative; padding:clamp(4rem,10vw,8rem) clamp(1.5rem,6vw,6rem); background:var(--linen); z-index:30; }
-  .section-inner{ max-width:1140px; margin:0 auto; text-align:center; }
-  .eyebrow{ font-size:0.76rem; letter-spacing:0.16em; text-transform:uppercase; font-weight:500; margin-bottom:1rem; opacity:0.65; }
-  .section-title{ font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2rem,4.5vw,3.1rem); line-height:1.15; margin-bottom:1.4rem; }
-  .section-lede{ font-size:1.1rem; opacity:0.85; max-width:720px; margin:0 auto; line-height:1.75; }
+    /* STATIC SECTIONS */
+    section.standard-content { position: relative; padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 6rem); background: var(--linen); z-index: 30; }
+    .section-inner { max-width: 1140px; margin: 0 auto; text-align: center; }
+    .eyebrow { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; margin-bottom: 1rem; opacity: 0.65; }
+    .section-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(2rem, 4.5vw, 3.1rem); line-height: 1.15; margin-bottom: 1.4rem; }
+    .section-lede { font-size: 1.1rem; opacity: 0.85; max-width: 720px; margin: 0 auto; line-height: 1.75; }
 
-  .btn-primary{ background:var(--bark); color:var(--linen); padding:0.85rem 1.8rem; border-radius:100px; font-weight:600; font-size:0.92rem; transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease; display:inline-block; white-space:nowrap; border:none; cursor:pointer;}
-  .btn-primary:hover{ background:var(--sage-deep); transform:translateY(-2px); }
+    .btn-primary { background: var(--bark); color: var(--linen); padding: 0.85rem 1.8rem; border-radius: 100px; font-weight: 600; font-size: 0.92rem; transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease; display: inline-block; white-space: nowrap; border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--sage-deep); transform: translateY(-2px); }
 
-  .features{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; margin-top:5rem; text-align:left; }
-  @media(max-width:860px){ .features{ grid-template-columns:1fr; gap:2rem; } }
-  .feature{ border-top:1.5px solid currentColor; padding-top:1.5rem; opacity:0.92; }
-  .feature-icon{ width:42px; height:42px; margin-bottom:1.2rem; }
-  .feature h3{ font-family:'Fraunces',serif; font-weight:500; font-size:1.25rem; margin-bottom:0.6rem; }
-  .feature p{ font-size:0.92rem; opacity:0.8; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 5rem; text-align: left; }
+    @media(max-width: 860px) { .features { grid-template-columns: 1fr; gap: 2rem; } }
+    .feature { border-top: 1.5px solid currentColor; padding-top: 1.5rem; opacity: 0.92; }
+    .feature-icon { width: 42px; height: 42px; margin-bottom: 1.2rem; }
+    .feature h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.25rem; margin-bottom: 0.6rem; }
+    .feature p { font-size: 0.92rem; opacity: 0.8; }
 
-  .colours{ text-align:center; background:#E8DFD0 !important; }
-  .colour-row{ display:flex; justify-content:center; gap:clamp(0.8rem,3vw,2rem); margin-top:3rem; flex-wrap:wrap; }
-  .colour-chip{ display:flex; flex-direction:column; align-items:center; gap:0.9rem; cursor:pointer; }
-  .swatch{ width:64px; height:64px; border-radius:50%; border:2px solid transparent; transition:transform 0.25s ease, border-color 0.25s ease; }
-  .colour-chip:hover .swatch{ transform:scale(1.08); }
-  .colour-chip.active .swatch{ border-color:currentColor; }
-  .colour-chip span{ font-size:0.82rem; font-weight:500; opacity:0.75; }
-  .hero-image-container{ width:min(420px,80vw); margin:3rem auto 0; border-radius:24px; overflow:hidden; }
-  .hero-image-container img{ width:100%; height:auto; object-fit:cover; transition:opacity 0.3s ease; }
+    .colours { text-align: center; background: #E8DFD0 !important; }
+    .colour-row { display: flex; justify-content: center; gap: clamp(0.8rem, 3vw, 2rem); margin-top: 3rem; flex-wrap: wrap; }
+    .colour-chip { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; cursor: pointer; }
+    .swatch { width: 64px; height: 64px; border-radius: 50%; border: 2px solid transparent; transition: transform 0.25s ease, border-color 0.25s ease; }
+    .colour-chip:hover .swatch { transform: scale(1.08); }
+    .colour-chip.active .swatch { border-color: currentColor; }
+    .colour-chip span { font-size: 0.82rem; font-weight: 500; opacity: 0.75; }
+    
+    /* Image container layout stabilization */
+    .hero-image-container { 
+      width: min(420px, 80vw); 
+      margin: 3rem auto 0; 
+      border-radius: 24px; 
+      overflow: hidden; 
+      aspect-ratio: 4 / 5;
+      background: rgba(0,0,0,0.03);
+    }
+    .hero-image-container img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.25s ease; }
 
-  .philosophy{ text-align:center; }
-  .philosophy blockquote{ font-family:'Fraunces',serif; font-weight:400; font-style:italic; font-size:clamp(1.6rem,4vw,2.6rem); line-height:1.35; max-width:22ch; margin:0 auto 1.6rem; }
-  .philosophy cite{ font-family:'Plus Jakarta Sans',sans-serif; font-style:normal; font-size:0.85rem; opacity:0.65; letter-spacing:0.04em; }
+    .philosophy { text-align: center; }
+    .philosophy blockquote { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.35; max-width: 22ch; margin: 0 auto 1.6rem; }
+    .philosophy cite { font-family: 'Plus Jakarta Sans', sans-serif; font-style: normal; font-size: 0.85rem; opacity: 0.65; letter-spacing: 0.04em; }
 
-  .final-cta{ text-align:center; min-height:65vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.8rem; }
-  footer{ text-align:center; padding:3rem 1.5rem 3.5rem; font-size:0.82rem; opacity:0.55; background:var(--linen); position:relative; z-index:30;}
-  footer .foot-mark{ font-weight:600; opacity:1; margin-bottom:0.4rem; font-size:0.95rem; }
+    .final-cta { text-align: center; min-height: 65vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem; }
+    footer { text-align: center; padding: 3rem 1.5rem 3.5rem; font-size: 0.82rem; opacity: 0.55; background: var(--linen); position: relative; z-index: 30; }
+    footer .foot-mark { font-weight: 600; opacity: 1; margin-bottom: 0.4rem; font-size: 0.95rem; }
 
-  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.in{ opacity:1; transform:translateY(0); }
-</style>
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
 <body>
 
 <div id="dusk-bg"></div>
 
 <div class="fixed-header-actions">
-  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary header-btn" target="_blank" rel="noopener">Get a SOKL — 250 SEK</a>
+  <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary header-btn" target="_blank" rel="noopener">Get a Tenu — 250 SEK</a>
 </div>
 
 <nav id="site-nav">
@@ -195,7 +216,7 @@
     </div>
 
     <div id="scroll-sokl-assembly" class="sokl-assembly">
-      <svg viewBox="120 -10 700 580" xmlns="http://www.w3.org/2000/svg" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" aria-label="SOKL wine stake illustration"> 
+      <svg viewBox="120 -10 700 580" xmlns="http://www.w3.org/2000/svg" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" aria-label="Tenu wine stake illustration"> 
         <g transform="matrix(1,0,0,1,0,-1062)"> 
           <g id="Logo15" transform="matrix(1,0,0,1,0,-0.992126)"> 
             <rect x="0" y="1062.992" width="826.772" height="826.772" style="fill:none;"/> 
@@ -204,10 +225,7 @@
                 <path d="M398.177,1559.451L398.177,1529.32L395.723,1529.45L395.596,1529.337L395.535,1529.279L395.477,1529.222L395.42,1529.164L395.365,1529.106L395.312,1529.048L395.262,1528.989L395.213,1528.931L395.166,1528.872L395.121,1528.813L395.079,1528.754L395.038,1528.695L394.999,1528.635L394.963,1528.576L394.928,1528.516L394.896,1528.456L394.865,1528.397L394.837,1528.337L394.811,1528.277L394.787,1528.217L394.765,1528.156L394.745,1528.096L394.727,1528.036L394.712,1527.976L394.698,1527.916L394.687,1527.855L394.677,1527.795L394.67,1527.735L394.665,1527.675L394.662,1527.614L394.661,1527.554L394.661,1516.425L394.85,1516.506L395.197,1516.648L395.557,1516.788L396.315,1517.06L397.12,1517.32L397.97,1517.568L398.861,1517.802L399.792,1518.022L400.756,1518.227L401.752,1518.415L402.773,1518.587L403.816,1518.742L404.877,1518.88L407.032,1519.102L409.203,1519.254L411.358,1519.34L413.394,1519.361L413.466,1519.361L415.504,1519.325L417.377,1519.241L419.279,1519.105L421.187,1518.913L423.077,1518.664L424.006,1518.518L424.921,1518.357L425.817,1518.181L426.692,1517.992L427.542,1517.789L428.363,1517.573L429.152,1517.344L429.907,1517.103L430.624,1516.851L431.301,1516.588L431.624,1516.453L431.689,1516.425L431.689,1527.554L431.688,1527.614L431.685,1527.674L431.68,1527.735L431.672,1527.795L431.663,1527.856L431.651,1527.917L431.637,1527.979L431.621,1528.04L431.603,1528.102L431.582,1528.163L431.559,1528.225L431.534,1528.287L431.507,1528.35L431.477,1528.412L431.445,1528.474L431.41,1528.537L431.373,1528.599L431.333,1528.662L431.292,1528.725L431.247,1528.787L431.201,1528.85L431.151,1528.913L431.1,1528.976L431.046,1529.039L430.989,1529.101L430.93,1529.164L430.868,1529.227L430.804,1529.289L430.737,1529.352L430.668,1529.414L430.596,1529.477L430.522,1529.539L430.365,1529.663L430.199,1529.787L430.022,1529.909L429.836,1530.031L429.639,1530.152L429.432,1530.272L429.235,1530.38L429.235,1559.451L398.177,1559.451ZM413.394,1526.543L413.394,1531.532L414.206,1532.472L414.206,1527.482L413.394,1526.543Z" style="fill:rgb(216,177,141);"/> 
               </g> 
               <g transform="matrix(1,0,0,1,0,0.992126)"> 
-                <path d="M435.866,1224.587L435.866,1512.401L435.865,1512.476L435.861,1512.55L435.854,1512.625L435.845,1512.7L435.833,1512.776L435.818,1512.852L435.801,1512.927L435.781,1513.004L435.758,1513.08L435.732,1513.156L435.703,1513.233L435.672,1513.31L435.637,1513.386L435.6,1513.463L435.56,1513.541L435.517,1513.618L435.47,1513.695L435.421,1513.772L435.369,1513.85L435.314,1513.927L435.256,1514.004L435.195,1514.082L435.13,1514.159L435.063,1514.236L434.993,1514.314L434.919,1514.391L434.843,1514.468L434.763,1514.545L434.68,1514.622L434.594,1514.698L434.505,1514.775L434.413,1514.851L434.22,1515.004L434.015,1515.155L433.797,1515.305L433.567,1515.454L433.324,1515.602L433.07,1515.748L432.804,1515.893L432.526,1516.036L432.237,1516.177L431.936,1516.316L431.689,1516.425L431.624,1516.453L431.301,1516.588L430.624,1516.851L429.907,1517.103L429.152,1517.344L428.363,1517.573L427.542,1517.789L426.692,1517.992L425.817,1518.181L424.921,1518.357L424.006,1518.518L423.077,1518.664L421.187,1518.913L419.279,1519.105L417.377,1519.241L415.504,1519.325L413.466,1519.361L413.394,1519.361L411.358,1519.34L409.203,1519.254L407.032,1519.102L404.877,1518.88L403.816,1518.742L402.773,1518.587L401.752,1518.415L400.756,1518.227L399.792,1518.022L398.861,1517.802L397.97,1517.568L397.12,1517.32L396.315,1517.06L395.557,1516.788L395.197,1516.648L394.85,1516.506L394.661,1516.425L394.516,1516.362L394.195,1516.216L393.887,1516.068L393.593,1515.918L393.313,1515.767L393.046,1515.614L392.793,1515.46L392.553,1515.305L392.328,1515.15L392.116,1514.993L392.015,1514.915L391.918,1514.836L391.824,1514.757L391.733,1514.679L391.646,1514.6L391.562,1514.521L391.481,1514.442L391.404,1514.363L391.33,1514.285L391.26,1514.206L391.193,1514.127L391.128,1514.048L391.068,1513.97L391.01,1513.891L390.956,1513.813L390.904,1513.735L390.856,1513.657L390.811,1513.579L390.769,1513.501L390.73,1513.423L390.694,1513.346L390.661,1513.269L390.631,1513.192L390.604,1513.115L390.589,1513.072L390.576,1513.028L390.564,1512.984L390.552,1512.94L390.541,1512.896L390.531,1512.851L390.522,1512.807L390.514,1512.762L390.507,1512.718L390.501,1512.673L390.496,1512.628L390.492,1512.583L390.488,1512.537L390.486,1512.492L390.484,1512.447L390.484,1512.401L390.484,1462.196L390.484,1462.15L390.484,1224.514L413.092,1224.55L435.866,1224.587Z" style="fill:rgb(200,145,95);"/> 
-              </g> 
-              <g transform="matrix(1,0,0,1,0,0.992126)"> 
-                <path d="M368.683,1192.162L368.525,1192.136L368.366,1192.107L368.208,1192.073L368.052,1192.036L367.899,1191.994L367.824,1191.972L367.75,1191.948L367.678,1191.923L367.608,1191.897L367.54,1191.87L367.474,1191.842L367.41,1191.813L367.35,1191.783L367.321,1191.768L367.292,1191.752L367.264,1191.736L367.237,1191.72L367.211,1191.704L367.186,1191.687L367.162,1191.671L367.139,1191.654L367.116,1191.636L367.095,1191.619L367.074,1191.601L367.055,1191.583L367.037,1191.566L367.028,1191.556L367.019,1191.547L367.011,1191.538L367.003,1191.529L366.996,1191.52L366.988,1191.511L366.981,1191.501L366.974,1191.492L366.968,1191.483L366.961,1191.473L366.955,1191.464L366.95,1191.454L366.944,1191.445L366.939,1191.435L366.935,1191.426L366.93,1191.416L366.926,1191.407L366.922,1191.397L366.918,1191.388L366.915,1191.378L366.912,1191.368L366.91,1191.359L366.907,1191.349L366.905,1191.339L366.903,1191.33L366.902,1191.32L366.901,1191.31L366.9,1191.3L366.9,1191.291L366.9,1191.281L366.9,1191.027L366.9,1181.239L366.902,1181.249L366.903,1181.258L366.905,1181.268L366.907,1181.278L366.91,1181.287L366.912,1181.297L366.915,1181.307L366.918,1181.316L366.922,1181.326L366.926,1181.335L366.93,1181.345L366.935,1181.355L366.939,1181.364L366.944,1181.374L366.95,1181.383L366.955,1181.392L366.961,1181.402L366.968,1181.411L366.974,1181.421L366.981,1181.43L366.988,1181.439L366.996,1181.448L367.003,1181.458L367.011,1181.467L367.019,1181.476L367.028,1181.485L367.037,1181.494L367.055,1181.512L367.074,1181.53L367.095,1181.548L367.1" fill="rgb(200,145,95)"/> 
+                <path d="M435.866,1224.587L435.866,1512.401L435.865,1512.476L435.861,1512.55L435.854,1512.625L435.845,1512.7L435.833,1512.776L435.818,1512.852L435.703,1513.233L435.637,1513.386L435.517,1513.618L435.421,1513.772L435.314,1513.927L435.195,1514.082L434.993,1514.314L434.843,1514.468L434.68,1514.622L434.505,1514.775L434.22,1515.004L433.797,1515.305L433.324,1515.602L432.804,1515.893L432.237,1516.177L431.689,1516.425L431.301,1516.588L430.624,1516.851L429.152,1517.344L427.542,1517.789L425.817,1518.181L424.006,1518.518L421.187,1518.913L417.377,1519.241L413.466,1519.361L411.358,1519.34L407.032,1519.102L403.816,1518.742L401.752,1518.415L399.792,1518.022L397.97,1517.568L396.315,1517.06L395.197,1516.648L394.661,1516.425L394.195,1516.216L393.593,1515.918L393.046,1515.614L392.553,1515.305L392.116,1514.993L391.918,1514.836L391.733,1514.679L391.562,1514.521L391.404,1514.363L391.26,1514.206L391.128,1514.048L391.01,1513.891L390.904,1513.735L390.811,1513.579L390.73,1513.423L390.661,1513.269L390.604,1513.115L390.564,1512.984L390.541,1512.896L390.522,1512.807L390.507,1512.718L390.496,1512.628L390.488,1512.537L390.484,1512.447L390.484,1512.401L390.484,1462.196L390.484,1224.514L413.092,1224.55L435.866,1224.587Z" style="fill:rgb(200,145,95);"/> 
               </g> 
             </g> 
           </g> 
@@ -226,7 +244,7 @@
     </div>
 
     <div class="hero-unified-footer-block" id="hero-footer-block">
-      <p>SOKL is a portable wine stake — 3D-printed, finished by hand, made to hold glasses steady wherever the grass isn't.</p>
+      <p>Tenu is a portable wine stake — 3D-printed, finished by hand, made to hold glasses steady wherever the grass isn't.</p>
     </div>
   </div>
 
@@ -241,7 +259,7 @@
 
 <section class="standard-content" id="more-story" style="padding-top:2rem;">
   <div class="section-inner">
-    <p class="section-lede" style="color:var(--bark-soft);">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. SOKL started as a fix for one evening and became the first thing Atelier Båge makes.</p>
+    <p class="section-lede" style="color:var(--bark-soft);">Arnaud grew up around French tables where things were always placed with a little care. He moved to Gothenburg, kept picnicking the way he always had — and kept losing wine to uneven ground. Tenu started as a fix for one evening and became the first thing Atelier Båge makes.</p>
   </div>
 
   <div class="section-inner features reveal">
@@ -285,7 +303,7 @@
       </div>
     </div>
     <div class="hero-image-container reveal">
-      <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="SOKL portable wine stake in sage green">
+      <img id="product-photo" src="https://raw.githubusercontent.com/atelierbage/website/main/img/Green.png" alt="Tenu portable wine stake in sage green">
     </div>
   </div>
 </section>
@@ -300,7 +318,7 @@
 <section class="final-cta standard-content" id="buy">
   <p class="eyebrow">Ready when you are</p>
   <h2 class="section-title reveal">An evening that doesn't spill.</h2>
-  <p class="reveal" style="margin-bottom:1.5rem; opacity:0.75;">SOKL — 250 SEK. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
+  <p class="reveal" style="margin-bottom:1.5rem; opacity:0.75;">Tenu — 250 SEK. Ships from Gothenburg in 2 days. Made in small batches, finished by hand.</p>
   <a href="https://www.etsy.com/se-en/listing/4503765469/" class="btn-primary reveal" target="_blank" rel="noopener">Shop on Etsy</a>
 </section>
 
@@ -319,7 +337,7 @@
   
   const glassLeft        = document.getElementById('glass-left-balancer');
   const glassRight       = document.getElementById('glass-right-balancer');
-  const soklAssembly      = document.getElementById('scroll-sokl-assembly');
+  const soklAssembly     = document.getElementById('scroll-sokl-assembly');
   const masterStage      = document.getElementById('master-stage');
 
   const stops=[
@@ -340,11 +358,18 @@
   }
   const lum=rgb=>{ const m=rgb.match(/\d+/g).map(Number); return(0.299*m[0]+0.587*m[1]+0.114*m[2])/255; };
 
+  // Cache dimensions to minimize layout thrashing inside scroll loop
+  let vH = window.innerHeight;
+  let maxScroll = document.documentElement.scrollHeight - vH;
+
+  function updateDimensions() {
+    vH = window.innerHeight;
+    maxScroll = document.documentElement.scrollHeight - vH;
+    corePipeline();
+  }
+
   function corePipeline(){
     const sY = window.scrollY;
-    const vH = window.innerHeight;
-    
-    const maxScroll = document.documentElement.scrollHeight - vH;
     const scrollP = maxScroll <= 0 ? 0 : Math.min(1, Math.max(0, sY / maxScroll));
     const col = colorAt(scrollP);
     duskBg.style.background = col;
@@ -369,20 +394,17 @@
       if (sY <= stage1End) {
         const t1 = Math.min(1, Math.max(0, sY / stage1End));
 
-        // Dismiss headings smoothly
         heroHeadingBlock.style.opacity = 1 - t1;
         heroHeadingBlock.style.transform = `translateY(${-t1 * 50}px)`;
 
         heroFooterBlock.style.opacity = 1 - t1;
         heroFooterBlock.style.transform = `translate3d(-50%, ${-t1 * 40}px, 0)`;
 
-        // Spread glasses on scroll tilt sequences
         const swingLeft = lerp(0, -14, t1);
         const swingRight = lerp(0, 14, t1);
         glassLeft.style.transform = `rotate(${swingLeft}deg)`;
         glassRight.style.transform = `rotate(${swingRight}deg)`;
 
-        // Delayed SOKL appearance sequence trigger threshold check
         if (sY > vH * 0.08) {
           soklAssembly.style.opacity = Math.min(1, (sY - (vH * 0.08)) / (stage1End * 0.4));
           const climbY = lerp(360, 120, t1);
@@ -428,24 +450,41 @@
     }
   }
 
-  window.addEventListener('scroll', corePipeline, {passive:true});
-  window.addEventListener('resize', corePipeline);
-  corePipeline();
+  // Ticking flag for performant scroll debouncing
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        corePipeline();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 
-  ( ()=>{
-    const io=new IntersectionObserver(
-      entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),
-      {threshold:0.10}
+  window.addEventListener('resize', updateDimensions);
+  updateDimensions();
+
+  (() => {
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); }),
+      { threshold: 0.10 }
     );
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   })();
 
-  const photo=document.getElementById('product-photo');
-  document.querySelectorAll('.colour-chip').forEach(chip=>{
-    chip.addEventListener('click',()=>{
-      document.querySelectorAll('.colour-chip').forEach(c=>c.classList.remove('active'));
+  const photo = document.getElementById('product-photo');
+  document.querySelectorAll('.colour-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.colour-chip').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
-      if(photo){ photo.style.opacity=0; setTimeout(()=>{photo.src=chip.dataset.img;photo.style.opacity=1;},250); }
+      if (photo) { 
+        photo.style.opacity = 0; 
+        setTimeout(() => { 
+          photo.src = chip.dataset.img; 
+          photo.style.opacity = 1; 
+        }, 250); 
+      }
     });
   });
 </script>
